@@ -38,6 +38,7 @@ interface DataTableProps {
   columns: ColumnDef<Transaction, unknown>[]
   data: Transaction[]
   hidePagination?: boolean
+  defaultPageSize?: number
 }
 const props = defineProps<DataTableProps>()
 
@@ -54,6 +55,10 @@ const table = useVueTable({
     get columnFilters() { return columnFilters.value },
     get columnVisibility() { return columnVisibility.value },
     get rowSelection() { return rowSelection.value },
+    pagination: {
+      pageIndex: 0,
+      pageSize: props.defaultPageSize ?? 10
+    }
   },
   enableRowSelection: true,
   onSortingChange: updaterOrValue => valueUpdater(updaterOrValue, sorting),

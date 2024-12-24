@@ -1,63 +1,9 @@
-<script lang="ts">
+<script setup lang="ts">
 import { defineComponent } from 'vue'
+import TransactionsTable from '@/components/transactions/TransactionsTable.vue'
 
-export default defineComponent({
-  name: 'AppTransactions',
-})
 </script>
 
 <template>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
-  <div>Transactions</div>
+  <TransactionsTable />
 </template>

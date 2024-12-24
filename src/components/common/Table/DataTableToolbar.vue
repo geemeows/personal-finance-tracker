@@ -64,7 +64,7 @@ const resetFilters = () => {
 
 <template>
   <div class="flex items-center justify-between">
-    <div class="flex flex-1 items-center space-x-2">
+    <div class="flex flex-1 items-center gap-2 flex-wrap">
       <Input placeholder="Filter transactions..."
         :model-value="(table.getColumn('title')?.getFilterValue() as string) ?? ''" class="h-8 w-[150px] lg:w-[250px]"
         @input="table.getColumn('title')?.setFilterValue($event.target.value)" />
