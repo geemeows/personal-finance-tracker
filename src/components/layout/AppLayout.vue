@@ -11,6 +11,9 @@ import {
 } from '@/components/ui/collapsible'
 
 import { Separator } from '@/components/ui/separator'
+import { Button } from '@/components/ui/button'
+
+import { PlusCircledIcon } from '@radix-icons/vue'
 
 import {
   Sidebar,
@@ -36,7 +39,7 @@ import {
 } from 'lucide-vue-next'
 
 import type { Account } from '@/types/Account'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const route = useRoute()
 const currentRoute = computed(() => route.path)
@@ -87,6 +90,8 @@ const accounts: Account[] = [
   },
 ]
 
+const sidebarOpen = ref(true)
+
 </script>
 
 <template>
@@ -121,6 +126,7 @@ const accounts: Account[] = [
                         class="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
+
                   <CollapsibleContent>
                     <SidebarMenuSub>
                       <SidebarMenuSubItem v-for="subItem in item.children" :key="subItem.name">
@@ -137,21 +143,27 @@ const accounts: Account[] = [
                 </SidebarMenuItem>
               </Collapsible>
             </template>
-
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
+
       <SidebarRail />
     </Sidebar>
 
-    <SidebarInset>
+    <SidebarInset :class="{
+      'max-w-[1180px]': sidebarOpen
+    }">
       <header
-        class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 top-0 sticky bg-white border-b-[1px]">
-        <div class="flex items-center gap-2 px-4">
-          <SidebarTrigger class="-ml-1" />
+        class="px-3 flex flex-row justify-between h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 top-0 sticky bg-white border-b-[1px] z-[999]">
+        <div class="flex items-center gap-2">
+          <SidebarTrigger class="-ml-1" @open-changed="(value) => sidebarOpen = value" />
           <Separator orientation="vertical" class="mr-2 h-4" />
           <AppBreadcrumb />
         </div>
+        <Button variant="outline">
+          <PlusCircledIcon class="mr-1 h-4 w-4" />
+          Add Transaction
+        </Button>
       </header>
       <div class="flex flex-1 flex-col gap-4 p-4">
         <slot />

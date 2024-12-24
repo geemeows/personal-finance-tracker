@@ -1,0 +1,802 @@
+[
+  {
+    "id": 1,
+    "amount": "-26.24",
+    "title": "Internet bill",
+    "category": "Bills",
+    "date": "2023-08-12",
+    "currency": "EGP"
+  },
+  {
+    "id": 2,
+    "amount": "456.91",
+    "title": "Groceries",
+    "category": "Transportation",
+    "date": "2024-12-26",
+    "currency": "EGP"
+  },
+  {
+    "id": 3,
+    "amount": "347.56",
+    "title": "Electricity bill",
+    "category": "Transportation",
+    "date": "2023-10-06",
+    "currency": "EGP"
+  },
+  {
+    "id": 4,
+    "amount": "458.86",
+    "title": "Streaming subscription",
+    "category": "Bills",
+    "date": "2024-06-23",
+    "currency": "EGP"
+  },
+  {
+    "id": 5,
+    "amount": "250.36",
+    "title": "Dinner with friends",
+    "category": "General",
+    "date": "2024-07-15",
+    "currency": "EGP"
+  },
+  {
+    "id": 6,
+    "amount": "432.70",
+    "title": "Dinner with friends",
+    "category": "Food",
+    "date": "2024-01-17",
+    "currency": "EGP"
+  },
+  {
+    "id": 7,
+    "amount": "187.67",
+    "title": "Gym membership",
+    "category": "General",
+    "date": "2024-07-13",
+    "currency": "EGP"
+  },
+  {
+    "id": 8,
+    "amount": "306.29",
+    "title": "Dinner with friends",
+    "category": "Food",
+    "date": "2024-10-21",
+    "currency": "EGP"
+  },
+  {
+    "id": 9,
+    "amount": "-43.76",
+    "title": "Internet bill",
+    "category": "Transportation",
+    "date": "2024-07-06",
+    "currency": "EGP"
+  },
+  {
+    "id": 10,
+    "amount": "226.39",
+    "title": "Coffee purchase",
+    "category": "General",
+    "date": "2023-10-16",
+    "currency": "EGP"
+  },
+  {
+    "id": 11,
+    "amount": "348.54",
+    "title": "Coffee purchase",
+    "category": "Transportation",
+    "date": "2023-09-08",
+    "currency": "EGP"
+  },
+  {
+    "id": 12,
+    "amount": "141.88",
+    "title": "Streaming subscription",
+    "category": "Bills",
+    "date": "2024-05-06",
+    "currency": "EGP"
+  },
+  {
+    "id": 13,
+    "amount": "296.41",
+    "title": "Electricity bill",
+    "category": "Transportation",
+    "date": "2024-04-04",
+    "currency": "EGP"
+  },
+  {
+    "id": 14,
+    "amount": "383.39",
+    "title": "Lunch at cafe",
+    "category": "Transportation",
+    "date": "2024-08-05",
+    "currency": "EGP"
+  },
+  {
+    "id": 15,
+    "amount": "227.85",
+    "title": "Lunch at cafe",
+    "category": "Transportation",
+    "date": "2024-12-11",
+    "currency": "EGP"
+  },
+  {
+    "id": 16,
+    "amount": "86.60",
+    "title": "Internet bill",
+    "category": "Transportation",
+    "date": "2024-07-07",
+    "currency": "EGP"
+  },
+  {
+    "id": 17,
+    "amount": "78.44",
+    "title": "Internet bill",
+    "category": "General",
+    "date": "2023-08-02",
+    "currency": "EGP"
+  },
+  {
+    "id": 18,
+    "amount": "450.04",
+    "title": "Taxi fare",
+    "category": "General",
+    "date": "2024-02-14",
+    "currency": "EGP"
+  },
+  {
+    "id": 19,
+    "amount": "455.10",
+    "title": "Bus ticket",
+    "category": "Bills",
+    "date": "2023-06-17",
+    "currency": "EGP"
+  },
+  {
+    "id": 20,
+    "amount": "315.26",
+    "title": "Groceries",
+    "category": "Transportation",
+    "date": "2024-10-25",
+    "currency": "EGP"
+  },
+  {
+    "id": 21,
+    "amount": "455.43",
+    "title": "Coffee purchase",
+    "category": "General",
+    "date": "2024-10-01",
+    "currency": "EGP"
+  },
+  {
+    "id": 22,
+    "amount": "46.08",
+    "title": "Lunch at cafe",
+    "category": "General",
+    "date": "2023-11-07",
+    "currency": "EGP"
+  },
+  {
+    "id": 23,
+    "amount": "53.11",
+    "title": "Electricity bill",
+    "category": "Bills",
+    "date": "2024-04-09",
+    "currency": "EGP"
+  },
+  {
+    "id": 24,
+    "amount": "71.24",
+    "title": "Lunch at cafe",
+    "category": "Food",
+    "date": "2024-11-15",
+    "currency": "EGP"
+  },
+  {
+    "id": 25,
+    "amount": "373.23",
+    "title": "Gym membership",
+    "category": "Food",
+    "date": "2023-06-07",
+    "currency": "EGP"
+  },
+  {
+    "id": 26,
+    "amount": "355.01",
+    "title": "Electricity bill",
+    "category": "Food",
+    "date": "2024-04-04",
+    "currency": "EGP"
+  },
+  {
+    "id": 27,
+    "amount": "232.85",
+    "title": "Streaming subscription",
+    "category": "Bills",
+    "date": "2023-03-22",
+    "currency": "EGP"
+  },
+  {
+    "id": 28,
+    "amount": "199.91",
+    "title": "Streaming subscription",
+    "category": "Transportation",
+    "date": "2023-03-27",
+    "currency": "EGP"
+  },
+  {
+    "id": 29,
+    "amount": "466.21",
+    "title": "Taxi fare",
+    "category": "Bills",
+    "date": "2024-03-23",
+    "currency": "EGP"
+  },
+  {
+    "id": 30,
+    "amount": "50.75",
+    "title": "Gym membership",
+    "category": "Food",
+    "date": "2023-11-15",
+    "currency": "EGP"
+  },
+  {
+    "id": 31,
+    "amount": "174.52",
+    "title": "Bus ticket",
+    "category": "Food",
+    "date": "2023-03-04",
+    "currency": "EGP"
+  },
+  {
+    "id": 32,
+    "amount": "447.17",
+    "title": "Coffee purchase",
+    "category": "Bills",
+    "date": "2024-08-04",
+    "currency": "EGP"
+  },
+  {
+    "id": 33,
+    "amount": "112.20",
+    "title": "Lunch at cafe",
+    "category": "Food",
+    "date": "2023-04-28",
+    "currency": "EGP"
+  },
+  {
+    "id": 34,
+    "amount": "351.88",
+    "title": "Dinner with friends",
+    "category": "Transportation",
+    "date": "2024-05-18",
+    "currency": "EGP"
+  },
+  {
+    "id": 35,
+    "amount": "346.73",
+    "title": "Bus ticket",
+    "category": "Bills",
+    "date": "2023-05-22",
+    "currency": "EGP"
+  },
+  {
+    "id": 36,
+    "amount": "477.45",
+    "title": "Gym membership",
+    "category": "Bills",
+    "date": "2024-10-18",
+    "currency": "EGP"
+  },
+  {
+    "id": 37,
+    "amount": "300.77",
+    "title": "Streaming subscription",
+    "category": "Transportation",
+    "date": "2023-02-27",
+    "currency": "EGP"
+  },
+  {
+    "id": 38,
+    "amount": "302.28",
+    "title": "Dinner with friends",
+    "category": "Transportation",
+    "date": "2023-02-01",
+    "currency": "EGP"
+  },
+  {
+    "id": 39,
+    "amount": "418.83",
+    "title": "Taxi fare",
+    "category": "Food",
+    "date": "2024-01-15",
+    "currency": "EGP"
+  },
+  {
+    "id": 40,
+    "amount": "131.15",
+    "title": "Gym membership",
+    "category": "Bills",
+    "date": "2024-03-30",
+    "currency": "EGP"
+  },
+  {
+    "id": 41,
+    "amount": "314.55",
+    "title": "Groceries",
+    "category": "General",
+    "date": "2024-09-08",
+    "currency": "EGP"
+  },
+  {
+    "id": 42,
+    "amount": "410.18",
+    "title": "Streaming subscription",
+    "category": "Transportation",
+    "date": "2023-11-13",
+    "currency": "EGP"
+  },
+  {
+    "id": 43,
+    "amount": "436.89",
+    "title": "Gym membership",
+    "category": "Transportation",
+    "date": "2024-09-10",
+    "currency": "EGP"
+  },
+  {
+    "id": 44,
+    "amount": "397.47",
+    "title": "Internet bill",
+    "category": "Transportation",
+    "date": "2023-05-28",
+    "currency": "EGP"
+  },
+  {
+    "id": 45,
+    "amount": "494.87",
+    "title": "Coffee purchase",
+    "category": "General",
+    "date": "2024-10-05",
+    "currency": "EGP"
+  },
+  {
+    "id": 46,
+    "amount": "189.84",
+    "title": "Bus ticket",
+    "category": "Transportation",
+    "date": "2023-05-15",
+    "currency": "EGP"
+  },
+  {
+    "id": 47,
+    "amount": "199.84",
+    "title": "Lunch at cafe",
+    "category": "Bills",
+    "date": "2024-06-02",
+    "currency": "EGP"
+  },
+  {
+    "id": 48,
+    "amount": "67.74",
+    "title": "Streaming subscription",
+    "category": "Transportation",
+    "date": "2024-08-01",
+    "currency": "EGP"
+  },
+  {
+    "id": 49,
+    "amount": "251.93",
+    "title": "Groceries",
+    "category": "Transportation",
+    "date": "2023-03-25",
+    "currency": "EGP"
+  },
+  {
+    "id": 50,
+    "amount": "198.90",
+    "title": "Taxi fare",
+    "category": "Food",
+    "date": "2023-11-16",
+    "currency": "EGP"
+  },
+  {
+    "id": 51,
+    "amount": "304.53",
+    "title": "Taxi fare",
+    "category": "Food",
+    "date": "2023-08-09",
+    "currency": "EGP"
+  },
+  {
+    "id": 52,
+    "amount": "452.40",
+    "title": "Gym membership",
+    "category": "Bills",
+    "date": "2023-07-20",
+    "currency": "EGP"
+  },
+  {
+    "id": 53,
+    "amount": "465.38",
+    "title": "Coffee purchase",
+    "category": "Bills",
+    "date": "2023-09-23",
+    "currency": "EGP"
+  },
+  {
+    "id": 54,
+    "amount": "490.33",
+    "title": "Gym membership",
+    "category": "Transportation",
+    "date": "2024-06-28",
+    "currency": "EGP"
+  },
+  {
+    "id": 55,
+    "amount": "408.90",
+    "title": "Electricity bill",
+    "category": "Transportation",
+    "date": "2023-05-16",
+    "currency": "EGP"
+  },
+  {
+    "id": 56,
+    "amount": "409.62",
+    "title": "Taxi fare",
+    "category": "General",
+    "date": "2024-08-06",
+    "currency": "EGP"
+  },
+  {
+    "id": 57,
+    "amount": "437.23",
+    "title": "Taxi fare",
+    "category": "Bills",
+    "date": "2024-09-18",
+    "currency": "EGP"
+  },
+  {
+    "id": 58,
+    "amount": "185.35",
+    "title": "Lunch at cafe",
+    "category": "General",
+    "date": "2024-02-05",
+    "currency": "EGP"
+  },
+  {
+    "id": 59,
+    "amount": "483.41",
+    "title": "Taxi fare",
+    "category": "Food",
+    "date": "2024-01-10",
+    "currency": "EGP"
+  },
+  {
+    "id": 60,
+    "amount": "236.19",
+    "title": "Bus ticket",
+    "category": "Food",
+    "date": "2024-05-18",
+    "currency": "EGP"
+  },
+  {
+    "id": 61,
+    "amount": "250.45",
+    "title": "Streaming subscription",
+    "category": "Bills",
+    "date": "2024-04-28",
+    "currency": "EGP"
+  },
+  {
+    "id": 62,
+    "amount": "217.56",
+    "title": "Electricity bill",
+    "category": "Transportation",
+    "date": "2024-09-07",
+    "currency": "EGP"
+  },
+  {
+    "id": 63,
+    "amount": "464.44",
+    "title": "Gym membership",
+    "category": "Transportation",
+    "date": "2024-06-02",
+    "currency": "EGP"
+  },
+  {
+    "id": 64,
+    "amount": "163.62",
+    "title": "Groceries",
+    "category": "Transportation",
+    "date": "2023-06-22",
+    "currency": "EGP"
+  },
+  {
+    "id": 65,
+    "amount": "138.38",
+    "title": "Groceries",
+    "category": "General",
+    "date": "2024-08-17",
+    "currency": "EGP"
+  },
+  {
+    "id": 66,
+    "amount": "168.12",
+    "title": "Gym membership",
+    "category": "Bills",
+    "date": "2024-04-22",
+    "currency": "EGP"
+  },
+  {
+    "id": 67,
+    "amount": "245.40",
+    "title": "Dinner with friends",
+    "category": "Bills",
+    "date": "2023-05-18",
+    "currency": "EGP"
+  },
+  {
+    "id": 68,
+    "amount": "338.65",
+    "title": "Streaming subscription",
+    "category": "General",
+    "date": "2023-11-01",
+    "currency": "EGP"
+  },
+  {
+    "id": 69,
+    "amount": "418.98",
+    "title": "Groceries",
+    "category": "Food",
+    "date": "2023-09-02",
+    "currency": "EGP"
+  },
+  {
+    "id": 70,
+    "amount": "344.45",
+    "title": "Internet bill",
+    "category": "Bills",
+    "date": "2023-10-07",
+    "currency": "EGP"
+  },
+  {
+    "id": 71,
+    "amount": "416.81",
+    "title": "Internet bill",
+    "category": "Bills",
+    "date": "2023-01-20",
+    "currency": "EGP"
+  },
+  {
+    "id": 72,
+    "amount": "455.44",
+    "title": "Taxi fare",
+    "category": "General",
+    "date": "2023-04-23",
+    "currency": "EGP"
+  },
+  {
+    "id": 73,
+    "amount": "298.42",
+    "title": "Internet bill",
+    "category": "Food",
+    "date": "2024-04-06",
+    "currency": "EGP"
+  },
+  {
+    "id": 74,
+    "amount": "242.61",
+    "title": "Bus ticket",
+    "category": "Transportation",
+    "date": "2023-12-17",
+    "currency": "EGP"
+  },
+  {
+    "id": 75,
+    "amount": "373.27",
+    "title": "Coffee purchase",
+    "category": "Food",
+    "date": "2023-02-03",
+    "currency": "EGP"
+  },
+  {
+    "id": 76,
+    "amount": "318.67",
+    "title": "Streaming subscription",
+    "category": "General",
+    "date": "2024-10-14",
+    "currency": "EGP"
+  },
+  {
+    "id": 77,
+    "amount": "20.93",
+    "title": "Groceries",
+    "category": "Transportation",
+    "date": "2023-08-07",
+    "currency": "EGP"
+  },
+  {
+    "id": 78,
+    "amount": "382.20",
+    "title": "Electricity bill",
+    "category": "Food",
+    "date": "2023-12-23",
+    "currency": "EGP"
+  },
+  {
+    "id": 79,
+    "amount": "260.90",
+    "title": "Internet bill",
+    "category": "Food",
+    "date": "2023-02-16",
+    "currency": "EGP"
+  },
+  {
+    "id": 80,
+    "amount": "360.08",
+    "title": "Bus ticket",
+    "category": "Food",
+    "date": "2024-01-02",
+    "currency": "EGP"
+  },
+  {
+    "id": 81,
+    "amount": "7.54",
+    "title": "Groceries",
+    "category": "Bills",
+    "date": "2023-06-25",
+    "currency": "EGP"
+  },
+  {
+    "id": 82,
+    "amount": "460.08",
+    "title": "Lunch at cafe",
+    "category": "Food",
+    "date": "2023-08-21",
+    "currency": "EGP"
+  },
+  {
+    "id": 83,
+    "amount": "29.59",
+    "title": "Streaming subscription",
+    "category": "General",
+    "date": "2024-11-22",
+    "currency": "EGP"
+  },
+  {
+    "id": 84,
+    "amount": "165.51",
+    "title": "Coffee purchase",
+    "category": "Bills",
+    "date": "2023-08-23",
+    "currency": "EGP"
+  },
+  {
+    "id": 85,
+    "amount": "91.60",
+    "title": "Groceries",
+    "category": "Transportation",
+    "date": "2024-10-06",
+    "currency": "EGP"
+  },
+  {
+    "id": 86,
+    "amount": "493.40",
+    "title": "Dinner with friends",
+    "category": "Food",
+    "date": "2023-02-01",
+    "currency": "EGP"
+  },
+  {
+    "id": 87,
+    "amount": "105.72",
+    "title": "Groceries",
+    "category": "Food",
+    "date": "2024-08-16",
+    "currency": "EGP"
+  },
+  {
+    "id": 88,
+    "amount": "489.15",
+    "title": "Internet bill",
+    "category": "Transportation",
+    "date": "2023-10-28",
+    "currency": "EGP"
+  },
+  {
+    "id": 89,
+    "amount": "33.57",
+    "title": "Internet bill",
+    "category": "Food",
+    "date": "2024-09-16",
+    "currency": "EGP"
+  },
+  {
+    "id": 90,
+    "amount": "448.84",
+    "title": "Bus ticket",
+    "category": "Food",
+    "date": "2023-07-25",
+    "currency": "EGP"
+  },
+  {
+    "id": 91,
+    "amount": "268.88",
+    "title": "Lunch at cafe",
+    "category": "Transportation",
+    "date": "2024-11-12",
+    "currency": "EGP"
+  },
+  {
+    "id": 92,
+    "amount": "337.94",
+    "title": "Coffee purchase",
+    "category": "General",
+    "date": "2023-03-12",
+    "currency": "EGP"
+  },
+  {
+    "id": 93,
+    "amount": "72.92",
+    "title": "Groceries",
+    "category": "Food",
+    "date": "2023-03-24",
+    "currency": "EGP"
+  },
+  {
+    "id": 94,
+    "amount": "246.82",
+    "title": "Taxi fare",
+    "category": "Bills",
+    "date": "2023-10-18",
+    "currency": "EGP"
+  },
+  {
+    "id": 95,
+    "amount": "376.02",
+    "title": "Dinner with friends",
+    "category": "Transportation",
+    "date": "2024-01-17",
+    "currency": "EGP"
+  },
+  {
+    "id": 96,
+    "amount": "334.31",
+    "title": "Streaming subscription",
+    "category": "Food",
+    "date": "2024-01-03",
+    "currency": "EGP"
+  },
+  {
+    "id": 97,
+    "amount": "187.66",
+    "title": "Internet bill",
+    "category": "General",
+    "date": "2024-08-20",
+    "currency": "EGP"
+  },
+  {
+    "id": 98,
+    "amount": "75.53",
+    "title": "Taxi fare",
+    "category": "Food",
+    "date": "2023-02-25",
+    "currency": "EGP"
+  },
+  {
+    "id": 99,
+    "amount": "227.22",
+    "title": "Coffee purchase",
+    "category": "Transportation",
+    "date": "2023-06-10",
+    "currency": "EGP"
+  },
+  {
+    "id": 100,
+    "amount": "64.79",
+    "title": "Dinner with friends",
+    "category": "Bills",
+    "date": "2023-08-11",
+    "currency": "EGP"
+  }
+]
