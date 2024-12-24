@@ -19,15 +19,13 @@ const router = createRouter({
       path: '/transactions',
       name: 'transactions',
       meta: { breadcrumb: 'Transactions' },
-      children: [
-        {
-          path: 'new',
-          name: 'new-transaction',
-          meta: { breadcrumb: 'New Transaction' },
-          component: () => import('../views/AppNewTransaction.vue'),
-        },
-      ],
       component: () => import('../views/AppTransactions.vue'),
+    },
+    {
+      path: '/transactions/new',
+      name: 'new-transaction',
+      meta: { breadcrumb: 'New Transaction' },
+      component: () => import('../views/AppNewTransaction.vue'),
     },
     {
       path: '/settings',

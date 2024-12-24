@@ -1,11 +1,7 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'AppNewTransaction',
-})
+<script setup lang="ts">
+import NewTransactionForm from '@/components/transactions/NewTransactionForm.vue'
 </script>
 
 <template>
-  <div>New Transaction</div>
+  <NewTransactionForm />
 </template>
