@@ -6,7 +6,8 @@ import type {
   VisibilityState,
 } from '@tanstack/vue-table'
 
-import type { Transaction } from '@/types/schemas'
+import type { Transaction } from '@/utils/indexedDB';
+
 
 import {
   Table,
@@ -55,10 +56,6 @@ const table = useVueTable({
     get columnFilters() { return columnFilters.value },
     get columnVisibility() { return columnVisibility.value },
     get rowSelection() { return rowSelection.value },
-    pagination: {
-      pageIndex: 0,
-      pageSize: props.defaultPageSize ?? 10
-    }
   },
   enableRowSelection: true,
   onSortingChange: updaterOrValue => valueUpdater(updaterOrValue, sorting),

@@ -31,6 +31,19 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+
+import NewTransactionForm from '../transactions/NewTransactionForm.vue'
+
 import {
   LayoutDashboard,
   Banknote,
@@ -91,6 +104,11 @@ const accounts: Account[] = [
 ]
 
 const sidebarOpen = ref(true)
+const newTransactionModalOpen = ref(false)
+
+const handleSubmitNewTransaction = () => {
+  newTransactionModalOpen.value = false
+}
 
 </script>
 
@@ -154,16 +172,34 @@ const sidebarOpen = ref(true)
       'max-w-[1180px]': sidebarOpen
     }">
       <header
-        class="px-3 flex flex-row justify-between h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 top-0 sticky bg-white border-b-[1px] z-[999]">
+        class="px-3 flex flex-row justify-between h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 top-0 sticky bg-white border-b-[1px] z-[50]">
         <div class="flex items-center gap-2">
           <SidebarTrigger class="-ml-1" @open-changed="(value) => sidebarOpen = value" />
           <Separator orientation="vertical" class="mr-2 h-4" />
           <AppBreadcrumb />
         </div>
-        <Button variant="outline">
-          <PlusCircledIcon class="mr-1 h-4 w-4" />
-          Add Transaction
-        </Button>
+
+        <Dialog :open="newTransactionModalOpen" @update:open="newTransactionModalOpen = $event">
+          <DialogTrigger as-child>
+            <Button variant="outline" @click="newTransactionModalOpen = true">
+              <PlusCircledIcon class="mr-1 h-4 w-4" />
+              Add Transaction
+            </Button>
+          </DialogTrigger>
+          <DialogContent class="">
+            <DialogHeader>
+              <DialogTitle>Add Transaction</DialogTitle>
+              <DialogDescription>
+                Add new Transaction to your account
+              </DialogDescription>
+            </DialogHeader>
+            <div class="grid gap-4 py-4">
+              <NewTransactionForm @submitted="handleSubmitNewTransaction" />
+            </div>
+          </DialogContent>
+        </Dialog>
+
+
       </header>
       <div class="flex flex-1 flex-col gap-4 p-4">
         <slot />

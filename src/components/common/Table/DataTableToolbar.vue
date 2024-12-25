@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, type Ref } from 'vue'
 import type { Table } from '@tanstack/vue-table'
-import type { Transaction } from '@/types/schemas'
+import type { Transaction } from '@/utils/indexedDB'
 import { Button } from '@/components/ui/button'
 import DateFilter from '@/components/dashboard/DateFilter.vue'
 import { CalendarIcon } from '@radix-icons/vue'
@@ -18,7 +18,7 @@ import {
   Cross2Icon
 } from '@radix-icons/vue'
 
-import { labels, type } from '@/utils/data'
+import { labels, type } from '@/utils/helpers'
 import DataTableFacetedFilter from './DataTableFacetedFilter.vue'
 import DataTableViewOptions from './DataTableViewOptions.vue'
 import type { DateRange } from 'radix-vue'

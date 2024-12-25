@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Row } from '@tanstack/vue-table'
-import type { Transaction } from '@/types/schemas'
+import type { Transaction } from '@/utils/indexedDB'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -18,7 +18,7 @@ import {
 import { DotsHorizontalIcon } from '@radix-icons/vue'
 import { computed } from 'vue'
 
-import { labels } from '@/utils/data'
+import { labels } from '@/utils/helpers'
 import { transactionSchema } from '@/types/schemas'
 
 interface DataTableRowActionsProps {
@@ -39,23 +39,9 @@ const transaction = computed(() => transactionSchema.parse(props.row.original))
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end" class="w-[160px]">
       <DropdownMenuItem>Edit</DropdownMenuItem>
-      <DropdownMenuItem>Make a copy</DropdownMenuItem>
-      <DropdownMenuItem>Favorite</DropdownMenuItem>
-      <DropdownMenuSeparator />
-      <DropdownMenuSub>
-        <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
-        <DropdownMenuSubContent>
-          <DropdownMenuRadioGroup :value="transaction.title">
-            <DropdownMenuRadioItem v-for="label in labels" :key="label.value" :value="label.value">
-              {{ label.label }}
-            </DropdownMenuRadioItem>
-          </DropdownMenuRadioGroup>
-        </DropdownMenuSubContent>
-      </DropdownMenuSub>
       <DropdownMenuSeparator />
       <DropdownMenuItem>
         Delete
-        <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>

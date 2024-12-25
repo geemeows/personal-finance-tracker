@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Column } from '@tanstack/vue-table'
-import type { Transaction } from '@/types/schemas'
+import type { Transaction } from '@/utils/indexedDB'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,

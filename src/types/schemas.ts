@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const transactionSchema = z.object({
   id: z.number(),
-  amount: z.string(),
+  amount: z.number(),
   title: z.string(),
   category: z.union([z.string(), z.enum(['Bills', 'Transportation', 'General', 'Food'])]),
   date: z.string(),
@@ -11,9 +11,13 @@ export const transactionSchema = z.object({
 
 export const createTransactionSchema = z.object({
   title: z.string().describe('Transaction Description'),
-  amount: z.string().describe('Transaction Amount'),
-  category: z.enum(['Bills', 'Transportation', 'General', 'Food']).describe('Transaction Category'),
-  date: z.string().describe('Transaction Date'),
+  amount: z.number().describe('Transaction Amount'),
+  type: z.enum(['Income', 'Expense']).describe('Transaction Type'),
+  category: z
+    .enum(['Bills', 'Transportation', 'General', 'Food'])
+    .describe('Transaction Category')
+    .optional(),
+  date: z.coerce.date().describe('Transaction Date'),
   currency: z.string().describe('Transaction Currency'),
 })
 

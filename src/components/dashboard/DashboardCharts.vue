@@ -116,7 +116,6 @@ function mapTransactionsToBucketsByCategories(transactions: Transaction[]): Cate
 
 const result = mapTransactionsToBuckets(transactions);
 const result2 = mapTransactionsToBucketsByCategories(transactions);
-console.log({ result, result2 });
 
 </script>
 

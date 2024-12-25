@@ -1,14 +1,14 @@
 import { h } from 'vue'
 import type { ColumnDef } from '@tanstack/vue-table'
-import type { Transaction } from '@/types/schemas'
+import type { Transaction } from '@/utils/indexedDB'
 
 import { Badge } from '@/components/ui/badge'
 import DataTableColumnHeader from '@/components/common/Table/DataTableColumnHeader.vue'
 import DataTableRowActions from '@/components/common/Table/DataTableRowActions.vue'
 
-import { labels, type } from '@/utils/data'
+import { labels } from '@/utils/helpers'
 
-export const columns: ColumnDef<Transaction>[] = [
+export const columns: ColumnDef<Omit<Transaction, 'id'>>[] = [
   {
     accessorKey: 'title',
     header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Title' }),
@@ -60,7 +60,7 @@ export const columns: ColumnDef<Transaction>[] = [
     cell: ({ row }) => {
       const isExpense = Number(row.getValue('amount')) < 0
       const classes = isExpense ? 'text-red-500' : 'text-green-500'
-      const transactionValue = `${isExpense ? '-' : '+'} ${row.original.currency}${Math.abs(Number(row.getValue('amount'))).toLocaleString('en-US')}`
+      const transactionValue = `${isExpense ? '-' : '+'} ${row.original.currency} ${Math.abs(Number(row.getValue('amount'))).toLocaleString('en-US')}`
 
       return h('div', { class: classes }, transactionValue)
     },

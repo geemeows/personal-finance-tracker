@@ -1,7 +1,33 @@
 <script setup lang="ts">
+import { inject, onMounted, type InjectionKey, type Ref } from 'vue'
 import { columns } from '@/utils/dashboardColumns'
 import DataTable from '@/components/common/Table/DataTable.vue'
-import transactions from '@/utils/transactions.json'
+import { useToast } from '@/components/ui/toast/use-toast'
+import { getTransactionsKey, transactionsKey } from '@/utils/db'
+import type { Transaction } from '@/utils/indexedDB'
+
+const transactions = inject(transactionsKey) as Ref<Transaction[]>
+const fetchTransactions = inject(getTransactionsKey, async () => {
+  throw new Error('fetchTransactions function not provided')
+})
+
+const { toast } = useToast()
+
+const getTransactionsData = async () => {
+  try {
+    await fetchTransactions()
+  } catch (error) {
+    toast({
+      title: 'Something went wrong',
+      variant: 'destructive',
+      description: 'Could not get transactions data',
+    });
+  }
+}
+
+onMounted(async () => {
+  await getTransactionsData()
+})
 </script>
 
 <template>

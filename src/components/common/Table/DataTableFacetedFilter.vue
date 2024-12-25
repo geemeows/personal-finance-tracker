@@ -3,7 +3,7 @@ import { computed } from 'vue'
 
 import type { Column } from '@tanstack/vue-table'
 import type { Component } from 'vue'
-import type { Transaction } from '@/types/schemas'
+import type { Transaction } from '@/utils/indexedDB'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '@/components/ui/command'
