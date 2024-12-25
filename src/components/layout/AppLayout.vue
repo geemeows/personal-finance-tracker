@@ -1,6 +1,9 @@
 <script setup lang=ts>
 import { useRoute } from 'vue-router'
 
+import currencies from '@/utils/currencies.json'
+
+
 import AppBreadcrumb from './AppBreadcrumb.vue'
 import AccountSwitcher from './AccountSwitcher.vue'
 
@@ -40,6 +43,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 import NewTransactionForm from '../transactions/NewTransactionForm.vue'
 
@@ -178,25 +191,38 @@ const handleSubmitNewTransaction = () => {
           <AppBreadcrumb />
         </div>
 
-        <Dialog :open="newTransactionModalOpen" @update:open="newTransactionModalOpen = $event">
-          <DialogTrigger as-child>
-            <Button variant="outline" @click="newTransactionModalOpen = true">
-              <PlusCircledIcon class="mr-1 h-4 w-4" />
-              Add Transaction
-            </Button>
-          </DialogTrigger>
-          <DialogContent class="">
-            <DialogHeader>
-              <DialogTitle>Add Transaction</DialogTitle>
-              <DialogDescription>
-                Add new Transaction to your account
-              </DialogDescription>
-            </DialogHeader>
-            <div class="grid gap-4 py-4">
-              <NewTransactionForm @submitted="handleSubmitNewTransaction" />
-            </div>
-          </DialogContent>
-        </Dialog>
+        <div class="flex flex-row gap-2 items-center">
+          <Select>
+            <SelectTrigger class="w-[250px]">
+              <SelectValue placeholder="Select a currency" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem v-for="{ code, currency } in currencies" :key="code" :value="code">
+                {{ `${code} (${currency})` }}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Dialog :open="newTransactionModalOpen" @update:open="newTransactionModalOpen = $event">
+            <DialogTrigger as-child>
+              <Button variant="outline" @click="newTransactionModalOpen = true">
+                <PlusCircledIcon class="mr-1 h-4 w-4" />
+                Add Transaction
+              </Button>
+            </DialogTrigger>
+            <DialogContent class="">
+              <DialogHeader>
+                <DialogTitle>Add Transaction</DialogTitle>
+                <DialogDescription>
+                  Add new Transaction to your account
+                </DialogDescription>
+              </DialogHeader>
+              <div class="grid gap-4 py-4">
+                <NewTransactionForm @submitted="handleSubmitNewTransaction" />
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
 
 
       </header>

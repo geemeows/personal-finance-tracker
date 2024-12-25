@@ -1,4 +1,9 @@
 import { z } from 'zod'
+import currencies from '@/utils/currencies.json'
+
+const zodEnum = <T>(arr: T[]): [T, ...T[]] => arr as [T, ...T[]]
+
+const codes = currencies.map((currency) => currency.code)
 
 export const transactionSchema = z.object({
   id: z.number(),
@@ -6,7 +11,7 @@ export const transactionSchema = z.object({
   title: z.string(),
   category: z.union([z.string(), z.enum(['Bills', 'Transportation', 'General', 'Food'])]),
   date: z.string(),
-  currency: z.string(),
+  currency: z.enum(zodEnum(codes)),
 })
 
 export const createTransactionSchema = z.object({
@@ -18,7 +23,7 @@ export const createTransactionSchema = z.object({
     .describe('Transaction Category')
     .optional(),
   date: z.coerce.date().describe('Transaction Date'),
-  currency: z.string().describe('Transaction Currency'),
+  currency: z.enum(zodEnum(codes)).describe('Transaction Currency'),
 })
 
 export type Transaction = z.infer<typeof transactionSchema>

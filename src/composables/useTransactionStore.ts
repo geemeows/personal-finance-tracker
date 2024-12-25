@@ -62,7 +62,6 @@ export const useIndexedDbStore = () => {
   }
 
   const updateTrx = async (item: Transaction): Promise<void> => {
-    console.log({ item })
     try {
       if (db.value) {
         await updateTransaction(db.value, item.id!, {
