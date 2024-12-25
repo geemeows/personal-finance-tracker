@@ -4,7 +4,7 @@ import AppLayout from '@/components/layout/AppLayout.vue'
 import Toaster from '@/components/ui/toast/Toaster.vue'
 import { useIndexedDbStore } from '@/composables/useTransactionStore';
 import { provide } from 'vue';
-import { AddTransactionKey, getTransactionsKey, transactionsKey } from './utils/db';
+import { AddTransactionKey, deleteTransactionKey, getFilteredTransactionsKey, getTransactionByIdKey, getTransactionsKey, transactionsKey, updateTransactionKey } from './utils/db';
 
 const {
   transactions,
@@ -13,17 +13,15 @@ const {
   addTrx,
   updateTrx,
   deleteTrx,
-  isLoading: isLoadingTrx,
-  error: errorTrx } = useIndexedDbStore()
+  getTrxById } = useIndexedDbStore()
 
 provide(transactionsKey, transactions)
 provide(getTransactionsKey, fetchTransactions)
-provide('filterTrx', filterTrx)
+provide(getFilteredTransactionsKey, filterTrx)
 provide(AddTransactionKey, addTrx)
-provide('updateTrx', updateTrx)
-provide('deleteTrx', deleteTrx)
-provide('isLoadingTrx', isLoadingTrx)
-provide('errorTrx', errorTrx)
+provide(updateTransactionKey, updateTrx)
+provide(deleteTransactionKey, deleteTrx)
+provide(getTransactionByIdKey, getTrxById)
 </script>
 
 <template>

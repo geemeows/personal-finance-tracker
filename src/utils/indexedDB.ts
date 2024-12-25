@@ -4,7 +4,7 @@ export type Transaction = {
   id?: number
   title: string
   amount: number
-  category: string
+  category?: string
   date: string
   currency: string
   createdAt?: Date
@@ -105,6 +105,29 @@ export const getAllTransactions = (db: IDBDatabase, filter?: Filter): Promise<Tr
         cursor.continue()
       } else {
         resolve(sortTransactions(results))
+      }
+    }
+
+    request.onerror = (event) => reject((event.target as IDBRequest).error)
+  })
+}
+
+export const getTransactionById = (
+  db: IDBDatabase,
+  id: number,
+): Promise<Transaction | undefined> => {
+  return new Promise((resolve, reject) => {
+    if (!db) return reject('Database not initialized')
+    const tx = db.transaction('transactions', 'readonly')
+    const store = tx.objectStore('transactions')
+    const request = store.get(id)
+
+    request.onsuccess = (event) => {
+      const transaction = (event.target as IDBRequest<IDBCursorWithValue>).result
+      if (transaction) {
+        resolve(transaction as unknown as Transaction)
+      } else {
+        resolve(undefined)
       }
     }
 

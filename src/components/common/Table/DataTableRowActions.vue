@@ -6,27 +6,42 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { DotsHorizontalIcon } from '@radix-icons/vue'
-import { computed } from 'vue'
 
-import { labels } from '@/utils/helpers'
-import { transactionSchema } from '@/types/schemas'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+
+import NewTransactionForm from '@/components/transactions/NewTransactionForm.vue'
+
+
+import { DotsHorizontalIcon } from '@radix-icons/vue'
+import { inject, ref } from 'vue'
+import { deleteTransactionKey } from '@/utils/db'
 
 interface DataTableRowActionsProps {
   row: Row<Transaction>
 }
 const props = defineProps<DataTableRowActionsProps>()
+const deleteTrx = inject(deleteTransactionKey) as (id: number) => void
 
-const transaction = computed(() => transactionSchema.parse(props.row.original))
+const editModalOpen = ref(false)
+const selectedTransaction = ref(props.row.original.id)
+
+
+const onDeleteTransaction = () => {
+  deleteTrx(props.row.original.id!)
+}
+
+const onEditTransaction = () => {
+  editModalOpen.value = true
+}
 </script>
 
 <template>
@@ -38,11 +53,25 @@ const transaction = computed(() => transactionSchema.parse(props.row.original))
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end" class="w-[160px]">
-      <DropdownMenuItem>Edit</DropdownMenuItem>
+      <DropdownMenuItem @click="onEditTransaction">Edit</DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem>
+      <DropdownMenuItem @click="onDeleteTransaction">
         Delete
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
+
+  <Dialog :open="editModalOpen" @update:open="() => { editModalOpen = false }">
+    <DialogContent class="">
+      <DialogHeader>
+        <DialogTitle>Edit Transaction</DialogTitle>
+        <DialogDescription>
+          Edit Transaction
+        </DialogDescription>
+      </DialogHeader>
+      <div class="grid gap-4 py-4">
+        <NewTransactionForm @submitted="() => { editModalOpen = false }" :id="selectedTransaction" />
+      </div>
+    </DialogContent>
+  </Dialog>
 </template>

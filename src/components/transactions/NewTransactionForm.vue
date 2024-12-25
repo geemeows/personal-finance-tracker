@@ -6,24 +6,50 @@ import { DependencyType } from '@/components/ui/auto-form/interface'
 import { useToast } from '@/components/ui/toast/use-toast'
 
 import type { Transaction } from '@/utils/indexedDB'
-import { inject } from 'vue'
-import { AddTransactionKey } from '@/utils/db'
+import { inject, ref, watch } from 'vue'
+import { AddTransactionKey, getTransactionByIdKey, updateTransactionKey } from '@/utils/db'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+
+import {
+  CalendarDate,
+} from '@internationalized/date'
 
 const addTrx = inject(AddTransactionKey, async () => {
   throw new Error('addTrx function not provided')
 })
 
+const getTrxById = inject(getTransactionByIdKey, async () => {
+  throw new Error('getTrxById function not provided')
+})
+
+const updateTrx = inject(updateTransactionKey, async () => {
+  throw new Error('updateTrx function not provided')
+})
+
+const currentTrx = ref<Transaction>()
+
+const props = defineProps<{
+  id?: number
+}>()
+
 const emit = defineEmits(['submitted'])
 
 const { toast } = useToast()
 
+const handleFormSubmit = (values: Record<string, string | number | Date>) => {
+  if (currentTrx.value)
+    updateTransaction(values)
+  else
+    addNewTransaction(values)
+}
 
-const onSubmit = async (values: Record<string, string | number | Date>) => {
+const addNewTransaction = async (values: Record<string, string | number | Date>) => {
   const trxDate = new Date(values.date)
 
   const formValues = {
     ...values,
-    date: `${trxDate.getFullYear()}-${trxDate.getMonth() + 1}-${trxDate.getDate()}`,
+    date: `${trxDate.getFullYear()}-${trxDate.getMonth() + 1}-${trxDate.getDate() < 10 ? `0${trxDate.getDate()}` : trxDate.getDate()}`,
     amount: values.type === 'Income' ? Number(values.amount) : -Number(values.amount),
   } as Omit<Transaction, 'id'>
 
@@ -42,20 +68,78 @@ const onSubmit = async (values: Record<string, string | number | Date>) => {
     });
   }
 }
+
+const updateTransaction = async (values: Record<string, string | number | Date>) => {
+  const trxDate = new Date(values.date)
+
+  const formValues = {
+    ...values,
+    date: `${trxDate.getFullYear()}-${trxDate.getMonth() + 1}-${trxDate.getDate() < 10 ? `0${trxDate.getDate()}` : trxDate.getDate()}`,
+    amount: values.type === 'Income' ? Number(values.amount) : -Number(values.amount),
+  } as Omit<Transaction, 'id'>
+
+  try {
+    await updateTrx({
+      ...formValues,
+      id: props.id
+    })
+    toast({
+      title: 'New Transaction',
+      description: 'Your transaction was successfully updated!',
+    });
+    emit('submitted')
+  } catch (error) {
+    toast({
+      title: 'New Transaction',
+      variant: 'destructive',
+      description: 'Your transaction was not updated!',
+    });
+  }
+}
+
+const form = useForm({
+  validationSchema: toTypedSchema(createTransactionSchema),
+})
+
+watch(() => props.id, async (id) => {
+  if (id) {
+    currentTrx.value = await getTrxById(id)
+    if (currentTrx.value) {
+      const formValues = {
+        amount: currentTrx.value.amount,
+        title: currentTrx.value.title,
+        category: currentTrx.value.category,
+        date: currentTrx.value.date,
+        type: currentTrx.value.amount < 0 ? 'Expense' : 'Income',
+        currency: currentTrx.value.currency
+      } as Transaction
+      const date = new Date(formValues.date)
+      const trxDate = new CalendarDate(date.getFullYear(), date.getMonth() + 1, date.getDate())
+      form.setValues({
+        ...formValues,
+        date: trxDate as unknown as Date,
+        category: formValues.category ? formValues.category as unknown as ('Food' | 'Transportation' | 'General' | 'Bills') : undefined,
+        currency: formValues.currency
+      })
+    }
+
+  }
+}, { immediate: true })
 </script>
 
 <template>
   <div class="flex flex-row">
-    <AutoForm class="flex w-full flex-col gap-4" :schema="createTransactionSchema" @submit="onSubmit" :dependencies="[
-      {
-        sourceField: 'type',
-        type: DependencyType.HIDES,
-        targetField: 'category',
-        when: type => type === 'Income',
-      },
-    ]">
+    <AutoForm class="flex w-full flex-col gap-4" :form="form" :schema="createTransactionSchema"
+      @submit="handleFormSubmit" :dependencies="[
+        {
+          sourceField: 'type',
+          type: DependencyType.HIDES,
+          targetField: 'category',
+          when: type => type === 'Income',
+        },
+      ]">
       <Button class="w-full" type="submit">
-        Submit
+        {{ currentTrx ? 'Update' : 'Submit' }}
       </Button>
     </AutoForm>
   </div>

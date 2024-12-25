@@ -7,6 +7,7 @@ import {
   deleteTransaction,
   getAllTransactions,
   type Filter,
+  getTransactionById,
 } from '@/utils/indexedDB'
 import { sortTransactions } from '@/utils/helpers'
 
@@ -61,9 +62,13 @@ export const useIndexedDbStore = () => {
   }
 
   const updateTrx = async (item: Transaction): Promise<void> => {
+    console.log({ item })
     try {
       if (db.value) {
-        await updateTransaction(db.value, item.id!, item)
+        await updateTransaction(db.value, item.id!, {
+          ...item,
+          category: item.amount > 0 ? undefined : item.category,
+        })
         const index = transactions.value.findIndex((t) => t.id === item.id)
         if (index !== -1) {
           transactions.value = sortTransactions([
@@ -91,6 +96,18 @@ export const useIndexedDbStore = () => {
     }
   }
 
+  const getTrxById = async (id: number): Promise<Transaction | undefined> => {
+    try {
+      if (db.value) {
+        const trx = await getTransactionById(db.value, id)
+        return trx
+      }
+    } catch (err) {
+      error.value = (err as Error).message
+      await fetchTransactions()
+    }
+  }
+
   watch(db, async (newDb) => {
     if (newDb) {
       await fetchTransactions()
@@ -109,5 +126,6 @@ export const useIndexedDbStore = () => {
     updateTrx,
     deleteTrx,
     fetchTransactions,
+    getTrxById,
   }
 }
