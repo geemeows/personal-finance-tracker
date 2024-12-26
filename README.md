@@ -1,20 +1,46 @@
-# personal-finance-tracker
+# Personal Finance Tracker ⛏✨
 
-This template should help get you started developing with Vue 3 in Vite.
+Welcome to **Expensify** — your go-to app for managing your finances with ease! 💸❤️
 
-## Recommended IDE Setup
+### Live Demo: [Expensify](https://expensify.geemeows.com) 🌐
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Features 🎯
 
-## Type Support for `.vue` Imports in TS
+Here’s what you can do with **Expensify** today:
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+- **📝 Add Transactions:** Record your expenses or income with a simple form.
+- **🔄 Edit Transactions:** Made a mistake? Update it anytime.
+- **❌ Delete Transactions:** Remove unwanted entries with ease.
+- **🔒 Filter by Date Range:** View transactions within a specific time frame.
+- **🌿 Filter by Category:** Keep track of spending on groceries, entertainment, etc.
+- **🔽 Sort Transactions:** Organize by date or amount for better visibility.
+- **📤 Export to CSV:** Download your transactions for offline use.
+- **💳 Manage Accounts:** Create accounts to organize your finances (transaction linking coming soon).
 
-## Customize configuration
+### Roadmap ⚡
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+We have exciting features planned for future updates:
 
-## Project Setup
+- **📝 Add Accounts:** Easily create new accounts.
+- **🔄 Edit Accounts:** Update account details whenever needed.
+- **❌ Delete Accounts:** Remove accounts no longer in use.
+- **🔗 Link Transactions to Accounts:** Track transactions for each account.
+- **🏃📈 Google Sheets Integration:** Use Google Sheets as a backend to store and manage your data.
+
+Stay tuned for these updates! 🚀
+
+## Included Goodies 🚀
+
+As a proof of concept, we’ve implemented automation tests for:
+
+- **Account Creation** 🔍
+- **Transaction Addition** ➕
+
+## How to Run Locally 🌐
+
+Ready to explore the app on your local machine? Here’s how:
+
+### Project Setup
 
 ```sh
 yarn
@@ -26,36 +52,18 @@ yarn
 yarn dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### Compile and Minify for Production
 
 ```sh
 yarn build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-yarn test:unit
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
+### Run End-to-End Tests with Cypress 🔧
 
 ```sh
 yarn test:e2e:dev
 ```
 
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
+## Additional Resources 🔗
 
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-yarn build
-yarn test:e2e
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-yarn lint
-```
+- [Project Requirements Document (PRD)](./PRD.md)

@@ -106,7 +106,7 @@ const currentAccount = inject(currentAccountKey)
 const form = useForm({
   validationSchema: toTypedSchema(createTransactionSchema),
   initialValues: {
-    currency: currentAccount?.value?.currency || '',
+    currency: currentTrx?.value?.currency || currentAccount?.value?.currency || '',
     type: 'Expense',
     category: 'General',
   }
@@ -158,7 +158,7 @@ watch(() => props.id, async (id) => {
         currency: {
           component: () => h(DropdownWithSearch, {
             fieldName: 'currency',
-            value: currentAccount?.currency || '',
+            value: currentTrx?.currency || currentAccount?.currency || '',
             list: currenciesList,
             label: 'Transaction Currency',
             required: true,

@@ -22,7 +22,7 @@ import { cn } from '@/lib/utils'
 
 
 import { CaretSortIcon, CheckIcon } from '@radix-icons/vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = defineProps<FieldProps & { value: string; list: { label: string; value: string }[] }>()
 const currentValue = ref(props.value)
@@ -31,6 +31,9 @@ const emit = defineEmits<{
   'update:value': [value: string]
 }>()
 
+watch(() => props.value, (value) => {
+  currentValue.value = value
+})
 </script>
 
 <template>

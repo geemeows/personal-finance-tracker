@@ -1,7 +1,7 @@
-
-# Product Requirements Document: Personal Finance Tracker
+# Product Requirements Document: Expensify
 
 ## Objective
+
 Develop a web application for users to track their income and expenses, visualize financial data, and handle multi-currency support with real-time exchange rates.
 
 ---
@@ -9,7 +9,9 @@ Develop a web application for users to track their income and expenses, visualiz
 ## 1. Functional Requirements
 
 ### 1.1 Core Features
+
 1. **Transaction Management**
+
    - Users can add income and expense entries, specifying:
      - Amount
      - Category (static list: Food, Transportation, Bills, General)
@@ -17,15 +19,18 @@ Develop a web application for users to track their income and expenses, visualiz
    - Support for editing and deleting transactions.
 
 2. **Currency Conversion**
+
    - Allow input of amounts in various currencies.
    - Convert non-base currency entries to the base currency using live exchange rates from APIs (e.g., ExchangeRate-API or Fastforex.io).
 
 3. **Filtering**
+
    - Enable filtering of transactions by:
      - Date range
      - Category
 
 4. **Data Display**
+
    - Display a list of transactions, showing:
      - Amount
      - Category
@@ -41,6 +46,7 @@ Develop a web application for users to track their income and expenses, visualiz
      - Pie chart
 
 ### 1.2 Data Export
+
 - Allow users to export financial data as a CSV file.
 
 ---
@@ -48,6 +54,7 @@ Develop a web application for users to track their income and expenses, visualiz
 ## 2. Technical Requirements
 
 ### 2.1 Framework & Libraries
+
 - Use Vue.js as the primary framework.
 - Include additional libraries as needed for:
   - Charting
@@ -55,28 +62,34 @@ Develop a web application for users to track their income and expenses, visualiz
   - Currency conversion API integration
 
 ### 2.2 State Management
+
 - Implement state management via:
   - A library like Vuex or Pinia
   - A custom-built solution, if preferred
 
 ### 2.3 Data Persistence
+
 - Store user data locally using:
   - LocalStorage
   - IndexedDB
 
 ### 2.4 API Integration
+
 - Integrate with a currency conversion API (e.g., ExchangeRate-API or Fastforex.io).
 
 ### 2.5 Code Quality
+
 - Adhere to clean coding principles.
 - Ensure modularity and reusability.
 
 ### 2.6 Automated Testing
+
 - Include automated tests for:
   - Core functionality
   - Edge cases (e.g., invalid inputs, large datasets)
 
 ### 2.7 Visual Design
+
 - Create a user-friendly and aesthetically pleasing interface.
 
 ---
@@ -84,31 +97,11 @@ Develop a web application for users to track their income and expenses, visualiz
 ## 3. Non-Functional Requirements
 
 1. **Performance**
+
    - Ensure smooth rendering of charts and lists, even with large datasets.
    - Optimize API calls for live exchange rates.
 
-2. **Scalability**
-   - Design the architecture to support future enhancements (e.g., cloud-based data storage).
-
-3. **Accessibility**
+2. **Accessibility**
    - Follow accessibility guidelines for a wide user base.
-
----
-
-## 4. Evaluation Criteria
-
-1. **Functionality**
-   - Completeness of all core features.
-   - Proper currency conversion and filtering.
-
-2. **Code Quality**
-   - Adherence to clean code practices.
-   - Proper use of Vue.js conventions.
-
-3. **Automated Testing**
-   - Comprehensive test coverage for core features.
-
-4. **Visual Interface**
-   - Intuitive and appealing design.
 
 ---
