@@ -35,7 +35,7 @@ import {
 import NewTransactionForm from '@/components/transactions/NewTransactionForm.vue'
 
 
-import { getFilteredTransactionsKey, transactionsKey } from '@/utils/db'
+import { currentAccountKey, exchangeRatesKey, getFilteredTransactionsKey, transactionsKey } from '@/utils/db'
 import { inject, onMounted, ref, watch, type Ref } from 'vue'
 import type { Transaction } from '@/utils/indexedDB'
 import { mapTransactionsToBuckets, mapTransactionsToBucketsByCategories, type BucketedTransaction, type CategoriesBucketedTransaction } from '@/utils/chartHelpers'
@@ -43,6 +43,15 @@ import { mapTransactionsToBuckets, mapTransactionsToBucketsByCategories, type Bu
 
 const today = new Date();
 const allTransactions = inject(transactionsKey) as Ref<Transaction[]>
+
+const exchangeRates = inject(exchangeRatesKey)
+const currentAccount = inject(currentAccountKey)
+
+const accumulator = (acc: number, transaction: Transaction) => {
+  const amountRate = exchangeRates?.value?.[transaction.currency] || 1
+  const convertedAmount = Math.abs(transaction.amount) * (1 / amountRate) * (exchangeRates?.value?.[currentAccount?.value?.currency!] || 1)
+  return acc + convertedAmount
+}
 
 const currentSelectedDate = ref({
   start: `${today.getFullYear()}-${today.getMonth() + 1}-01`,
@@ -63,8 +72,8 @@ const onDateChange = async ({ start, end }: { start: string; end: string }) => {
   }
 
   filteredTransactions.value = await fetchFilteredTransactions({ startDate: start, endDate: end })
-  transactionsTabData.value = mapTransactionsToBuckets(filteredTransactions.value)
-  categoriesTabData.value = mapTransactionsToBucketsByCategories(filteredTransactions.value)
+  transactionsTabData.value = mapTransactionsToBuckets(filteredTransactions.value, accumulator)
+  categoriesTabData.value = mapTransactionsToBucketsByCategories(filteredTransactions.value, accumulator)
 }
 
 const newTransactionModalOpen = ref(false)
@@ -79,8 +88,8 @@ onMounted(async () => {
   const endDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 
   filteredTransactions.value = await fetchFilteredTransactions({ startDate, endDate })
-  transactionsTabData.value = mapTransactionsToBuckets(filteredTransactions.value)
-  categoriesTabData.value = mapTransactionsToBucketsByCategories(filteredTransactions.value);
+  transactionsTabData.value = mapTransactionsToBuckets(filteredTransactions.value, accumulator)
+  categoriesTabData.value = mapTransactionsToBucketsByCategories(filteredTransactions.value, accumulator);
 })
 
 watch(() => allTransactions.value, () => {

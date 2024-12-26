@@ -23,8 +23,6 @@ const fetchFilteredTransactions = inject(getFilteredTransactionsKey, async () =>
 const accumulator = (acc: number, transaction: Transaction) => {
   const amountRate = exchangeRates?.value?.[transaction.currency] || 1
   const convertedAmount = transaction.amount * (1 / amountRate) * (exchangeRates?.value?.[currentAccount?.value?.currency!] || 1)
-  // const amount = rate ? transaction.amount * (rate >= 1 ? rate : 1 / rate) : transaction.amount
-  console.log({ amountRate, convertedAmount })
   return acc + convertedAmount
 }
 const netBalance = computed(() => filteredTransactions.value.reduce((acc, transaction) => accumulator(acc, transaction), 0))

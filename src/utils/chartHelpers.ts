@@ -14,7 +14,10 @@ export interface CategoriesBucketedTransaction {
   bills: number
 }
 
-export function mapTransactionsToBuckets(transactions: Transaction[]): BucketedTransaction[] {
+export function mapTransactionsToBuckets(
+  transactions: Transaction[],
+  accumulator: (acc: number, transaction: Transaction) => number,
+): BucketedTransaction[] {
   if (!transactions.length) return []
 
   const sortedTransactions = [...transactions].sort(
@@ -40,9 +43,9 @@ export function mapTransactionsToBuckets(transactions: Transaction[]): BucketedT
   sortedTransactions.forEach((transaction) => {
     const dateKey = formatDate(new Date(transaction.date))
     if (transaction.amount > 0) {
-      buckets[dateKey].income += transaction.amount
+      buckets[dateKey].income += accumulator(buckets[dateKey].income, transaction)
     } else {
-      buckets[dateKey].expense += Math.abs(transaction.amount)
+      buckets[dateKey].expense += accumulator(buckets[dateKey].expense, transaction)
     }
   })
 
@@ -60,6 +63,7 @@ export function mapTransactionsToBuckets(transactions: Transaction[]): BucketedT
 
 export function mapTransactionsToBucketsByCategories(
   transactions: Transaction[],
+  accumulator: (acc: number, transaction: Transaction) => number,
 ): CategoriesBucketedTransaction[] {
   if (!transactions.length) return []
 
@@ -88,20 +92,19 @@ export function mapTransactionsToBucketsByCategories(
   // Fill in actual transaction data
   sortedTransactions.forEach((transaction) => {
     const dateKey = formatDate(new Date(transaction.date))
-    const amount = Math.abs(transaction.amount)
 
     switch (transaction.category?.toLowerCase()) {
       case 'food':
-        buckets[dateKey].food += amount
+        buckets[dateKey].food += accumulator(buckets[dateKey].food, transaction)
         break
       case 'transportation':
-        buckets[dateKey].transportation += amount
+        buckets[dateKey].transportation += accumulator(buckets[dateKey].transportation, transaction)
         break
       case 'general':
-        buckets[dateKey].general += amount
+        buckets[dateKey].general += accumulator(buckets[dateKey].general, transaction)
         break
       case 'bills':
-        buckets[dateKey].bills += amount
+        buckets[dateKey].bills += accumulator(buckets[dateKey].bills, transaction)
         break
     }
   })
