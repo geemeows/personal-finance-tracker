@@ -1,33 +1,39 @@
 import { ref, watch } from 'vue'
 import { type Account, openDatabase, addAccount, getAllAccounts } from '@/utils/indexedDBQueries'
+import { useGlobalDatabase } from './useDatabase'
 
 export const useAccountsDbStore = () => {
+  const {
+    db,
+    isInitialized: isDbInitialized,
+    ensureInitialized: ensureDbInitialized,
+  } = useGlobalDatabase()
+
   const accounts = ref<Account[]>([])
   const currentAccount = ref<Account | null>(null)
   const isLoading = ref(false)
   const error = ref<string | null>(null)
-  const db = ref<IDBDatabase | null>(null)
-
-  const initializeDb = async (): Promise<void> => {
-    try {
-      db.value = await openDatabase('FinanceDB')
-      await fetchAccounts()
-    } catch (err) {
-      error.value = (err as Error).message
-    }
-  }
+  const isInitialized = ref(false)
 
   const fetchAccounts = async (): Promise<void> => {
+    if (!db.value) {
+      throw new Error('Database not initialized')
+    }
+
     isLoading.value = true
+    error.value = null
+
     try {
-      if (db.value) {
-        accounts.value = await getAllAccounts(db.value)
-        currentAccount.value = {
-          ...accounts.value[0],
-        }
+      const fetchedAccounts = await getAllAccounts(db.value)
+      accounts.value = fetchedAccounts
+
+      if (!currentAccount.value && fetchedAccounts.length > 0) {
+        currentAccount.value = { ...fetchedAccounts[0] }
       }
+      isInitialized.value = true
     } catch (err) {
       error.value = (err as Error).message
+      throw err
     } finally {
       isLoading.value = false
     }
@@ -52,22 +58,34 @@ export const useAccountsDbStore = () => {
     }
   }
 
+  watch(isDbInitialized, async (initialized) => {
+    if (initialized && !isInitialized.value) {
+      await fetchAccounts()
+    }
+  })
+
+  const ensureInitialized = async () => {
+    await ensureDbInitialized()
+    if (!isInitialized.value) {
+      await fetchAccounts()
+    }
+  }
+
   watch(db, async (newDb) => {
     if (newDb) {
       await fetchAccounts()
     }
   })
 
-  // Initialize the database
-  initializeDb()
-
   return {
     accounts,
     currentAccount,
     isLoading,
+    isInitialized,
     error,
     addNewAccount,
     fetchAccounts,
     updateAccountCurrency,
+    ensureInitialized,
   }
 }

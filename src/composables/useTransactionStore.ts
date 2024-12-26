@@ -11,8 +11,17 @@ import {
 } from '@/utils/indexedDBQueries'
 import { sortTransactions } from '@/utils/helpers'
 import { getExchangeRates } from '@/services/exchangeRates.servieces'
+import { useGlobalDatabase } from './useDatabase'
 
 export const useTransactionsDbStore = () => {
+  const {
+    db,
+    isInitialized: isDbInitialized,
+    ensureInitialized: ensureDbInitialized,
+  } = useGlobalDatabase()
+
+  const isInitialized = ref(false)
+
   const currentCurrency = ref('')
   const exchangeRate = ref<{ [key: string]: number }>()
   const ratesLastUpdated = ref<string>()
@@ -20,17 +29,7 @@ export const useTransactionsDbStore = () => {
   const transactions = ref<Transaction[]>([])
   const isLoading = ref(false)
   const error = ref<string | null>(null)
-  const db = ref<IDBDatabase | null>(null)
   const currentFilter = ref<Filter | null>(null)
-
-  const initializeDb = async (): Promise<void> => {
-    try {
-      db.value = await openDatabase('FinanceDB')
-      await fetchTransactions()
-    } catch (err) {
-      error.value = (err as Error).message
-    }
-  }
 
   const fetchExchangeRate = async (curr: string): Promise<void> => {
     currentCurrency.value = curr
@@ -48,6 +47,7 @@ export const useTransactionsDbStore = () => {
     try {
       if (db.value) {
         transactions.value = await getAllTransactions(db.value, currentFilter.value || undefined)
+        isInitialized.value = true
       }
     } catch (err) {
       error.value = (err as Error).message
@@ -123,28 +123,39 @@ export const useTransactionsDbStore = () => {
     }
   }
 
+  const ensureInitialized = async () => {
+    await ensureDbInitialized()
+    if (!isInitialized.value) {
+      await fetchTransactions()
+    }
+  }
+
+  watch(isDbInitialized, async (initialized) => {
+    if (initialized && !isInitialized.value) {
+      await fetchTransactions()
+    }
+  })
+
   watch(db, async (newDb) => {
     if (newDb) {
       await fetchTransactions()
     }
   })
 
-  // Initialize the database
-  initializeDb()
-
   return {
-    currentCurrency,
-    exchangeRate,
-    ratesLastUpdated,
     transactions,
-    isLoading,
-    error,
-    addTrx,
+    fetchTransactions,
     filterTrx,
+    addTrx,
     updateTrx,
     deleteTrx,
-    fetchTransactions,
-    fetchExchangeRate,
     getTrxById,
+    fetchExchangeRate,
+    exchangeRate,
+    ratesLastUpdated,
+    currentCurrency,
+    isInitialized,
+    isLoading,
+    ensureInitialized,
   }
 }
