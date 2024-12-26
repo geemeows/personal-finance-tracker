@@ -32,7 +32,7 @@ const df = new DateFormatter('en-US', {
                 <Button variant="outline" :class="cn(
                   'w-full justify-start text-left font-normal',
                   !slotProps.componentField.modelValue && 'text-muted-foreground',
-                )">
+                )" :data-qa="`${label?.toLowerCase().split(' ').join('-')}-field`">
                   <CalendarIcon class="mr-2 h-4 w-4" />
                   {{ slotProps.componentField.modelValue ?
                     df.format(slotProps.componentField.modelValue.toDate(getLocalTimeZone())) : "Pick a date" }}

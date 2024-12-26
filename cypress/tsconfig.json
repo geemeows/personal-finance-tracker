@@ -1,9 +1,14 @@
+// {
+//   "extends": "@vue/tsconfig/tsconfig.dom.json",
+//   "include": ["./e2e/**/*", "./support/**/*"],
+//   "exclude": ["./support/component.*"],
+//   "compilerOptions": {
+//     "isolatedModules": false,
+//     "types": ["cypress"]
+//   }
+// }
+
 {
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["./e2e/**/*", "./support/**/*"],
-  "exclude": ["./support/component.*"],
-  "compilerOptions": {
-    "isolatedModules": false,
-    "types": ["cypress"]
-  }
+  "extends": "../tsconfig.json",
+  "include": ["integration/*.ts", "support/*.ts", "../node_modules/cypress"]
 }

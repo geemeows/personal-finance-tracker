@@ -107,6 +107,7 @@ const form = useForm({
   validationSchema: toTypedSchema(createTransactionSchema),
   initialValues: {
     currency: currentAccount?.value?.currency || '',
+    type: 'Expense',
     category: 'General',
   }
 })
