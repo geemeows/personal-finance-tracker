@@ -26,4 +26,10 @@ export const createTransactionSchema = z.object({
   currency: z.enum(zodEnum(codes)).describe('Transaction Currency'),
 })
 
+export const createAccountSchema = z.object({
+  name: z.string().describe('Account Name'),
+  password: z.string().describe('Account Password').optional(),
+  currency: z.enum(zodEnum(codes)).describe('Account Currency'),
+})
+
 export type Transaction = z.infer<typeof transactionSchema>

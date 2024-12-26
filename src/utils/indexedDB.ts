@@ -10,6 +10,14 @@ export type Transaction = {
   createdAt?: Date
 }
 
+export type Account = {
+  id?: number
+  name: string
+  password?: string
+  currency: string
+  createdAt?: Date
+}
+
 export type Filter = {
   startDate?: string
   endDate?: string
@@ -22,10 +30,15 @@ export const openDatabase = (dbName: string, version = 1): Promise<IDBDatabase> 
 
     request.onupgradeneeded = (event) => {
       const db = (event.target as IDBOpenDBRequest).result
+
       if (!db.objectStoreNames.contains('transactions')) {
         const store = db.createObjectStore('transactions', { keyPath: 'id', autoIncrement: true })
         store.createIndex('date', 'date', { unique: false })
         store.createIndex('category', 'category', { unique: false })
+      }
+
+      if (!db.objectStoreNames.contains('accounts')) {
+        db.createObjectStore('accounts', { keyPath: 'id', autoIncrement: true })
       }
     }
 
@@ -131,6 +144,33 @@ export const getTransactionById = (
       }
     }
 
+    request.onerror = (event) => reject((event.target as IDBRequest).error)
+  })
+}
+
+export const addAccount = (db: IDBDatabase, account: Omit<Account, 'id'>): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    if (!db) return reject('Database not initialized')
+    const acc = db.transaction('accounts', 'readwrite')
+    const store = acc.objectStore('accounts')
+    const request = store.add({
+      ...account,
+      createdAt: new Date(),
+    })
+
+    request.onsuccess = () => resolve(request.result as number)
+    request.onerror = (event) => reject((event.target as IDBRequest).error)
+  })
+}
+
+export const getAllAccounts = (db: IDBDatabase): Promise<Account[]> => {
+  return new Promise((resolve, reject) => {
+    if (!db) return reject('Database not initialized')
+    const tx = db.transaction('accounts', 'readonly')
+    const store = tx.objectStore('accounts')
+    const request = store.getAll()
+
+    request.onsuccess = () => resolve(request.result)
     request.onerror = (event) => reject((event.target as IDBRequest).error)
   })
 }

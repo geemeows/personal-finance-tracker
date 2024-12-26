@@ -23,7 +23,7 @@ import {
   ChevronsUpDown,
   Plus,
 } from 'lucide-vue-next'
-import type { Account } from '@/types/Account';
+import type { Account } from '@/utils/indexedDB';
 
 const { accounts } = defineProps<{
   accounts: Account[]
@@ -31,7 +31,7 @@ const { accounts } = defineProps<{
 
 const activeAccount = ref(accounts[0])
 
-const setActiveAccount = (account: typeof accounts[number]) => {
+const setActiveAccount = (account: Account) => {
   activeAccount.value = account
 }
 
@@ -46,14 +46,14 @@ const setActiveAccount = (account: typeof accounts[number]) => {
             class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
             <div
               class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground bg-black text-white">
-              <LockKeyholeOpen v-if="activeAccount.type === 'open'" class="size-4" />
+              <LockKeyholeOpen v-if="!activeAccount?.password" class="size-4" />
               <KeyRound v-else class="size-4" />
             </div>
             <div class="grid flex-1 text-left text-sm leading-tight">
-              <span class="truncate font-semibold">{{ activeAccount.name }}</span>
+              <span class="truncate font-semibold">{{ activeAccount?.name }}</span>
               <div class="flex gap-1 items-center">
-                <span class="truncate text-xs capitalize">{{ activeAccount.type }}</span>
-                <span v-if="activeAccount.type === 'locked'" class="truncate text-[10px] text-slate-500 italic">(Require
+                <span class="truncate text-xs capitalize">{{ activeAccount?.password ? 'Locked' : 'Open' }}</span>
+                <span v-if="activeAccount?.password" class="truncate text-[10px] text-slate-500 italic">(Require
                   auth.)</span>
               </div>
             </div>
@@ -65,14 +65,13 @@ const setActiveAccount = (account: typeof accounts[number]) => {
           <DropdownMenuLabel class="text-xs text-muted-foreground">
             Accounts
           </DropdownMenuLabel>
-          <DropdownMenuItem v-for="(account, index) in accounts" :key="account.name" class="gap-2 p-2"
+          <DropdownMenuItem v-for="account in accounts" :key="account.name" class="gap-2 p-2"
             @click="setActiveAccount(account)">
             <div class="flex size-6 items-center justify-center rounded-sm border">
-              <LockKeyholeOpen v-if="account.type === 'open'" class="size-4" />
+              <LockKeyholeOpen v-if="!account.password" class="size-4" />
               <KeyRound v-else class="size-4" />
             </div>
             {{ account.name }}
-            <DropdownMenuShortcut>⌘{{ index + 1 }}</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem class="gap-2 p-2">

@@ -2,27 +2,48 @@
 import DashboardCard from '@/components/dashboard/DashboardCard.vue'
 import DashboardCharts from '@/components/dashboard/DashboardCharts.vue'
 import DashboardTable from '@/components/dashboard/DashboardTable.vue'
-import { getFilteredTransactionsKey } from '@/utils/db';
+import { currentAccountKey, exchangeRatesKey, getFilteredTransactionsKey, transactionsKey } from '@/utils/db';
 import type { Transaction } from '@/utils/indexedDB';
-import { computed, inject, onMounted, ref } from 'vue';
+import type { NoSubstitutionTemplateLiteral } from 'typescript';
+import { computed, inject, onMounted, ref, watch, type Ref } from 'vue';
 
 const today = new Date();
+
+const allTransactions = inject(transactionsKey) as Ref<Transaction[]>
+const exchangeRates = inject(exchangeRatesKey)
+const currentAccount = inject(currentAccountKey)
+
+
 
 const filteredTransactions = ref<Transaction[]>([])
 const fetchFilteredTransactions = inject(getFilteredTransactionsKey, async () => {
   throw new Error('fetchTransactions function not provided')
 })
 
-const netBalance = computed(() => filteredTransactions.value.reduce((acc, transaction) => acc + transaction.amount, 0))
-const totalIncome = computed(() => filteredTransactions.value.filter(tx => tx.amount > 0).reduce((acc, transaction) => acc + transaction.amount, 0))
-const totalExpenses = computed(() => filteredTransactions.value.filter(tx => tx.amount < 0).reduce((acc, transaction) => acc + transaction.amount, 0))
+const accumulator = (acc: number, transaction: Transaction) => {
+  const amountRate = exchangeRates?.value?.[transaction.currency] || 1
+  const convertedAmount = transaction.amount * (1 / amountRate) * (exchangeRates?.value?.[currentAccount?.value?.currency!] || 1)
+  // const amount = rate ? transaction.amount * (rate >= 1 ? rate : 1 / rate) : transaction.amount
+  console.log({ amountRate, convertedAmount })
+  return acc + convertedAmount
+}
+const netBalance = computed(() => filteredTransactions.value.reduce((acc, transaction) => accumulator(acc, transaction), 0))
+const totalIncome = computed(() => filteredTransactions.value.filter(tx => tx.amount > 0).reduce((acc, transaction) => accumulator(acc, transaction), 0))
+const totalExpenses = computed(() => filteredTransactions.value.filter(tx => tx.amount < 0).reduce((acc, transaction) => accumulator(acc, transaction), 0))
 
-
-onMounted(async () => {
+const getFilteredTransactions = async () => {
   const startDate = `${today.getFullYear()}-${today.getMonth() + 1}-01`;
   const endDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 
   filteredTransactions.value = await fetchFilteredTransactions({ startDate, endDate })
+}
+
+onMounted(async () => {
+  await getFilteredTransactions()
+})
+
+watch(() => allTransactions.value, async () => {
+  await getFilteredTransactions()
 })
 </script>
 

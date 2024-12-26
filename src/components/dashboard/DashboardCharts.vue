@@ -15,17 +15,35 @@ import {
 import {
   CircleDollarSign,
   PanelsTopLeft,
+  HandCoins,
 } from 'lucide-vue-next'
+
+import { PlusCircledIcon } from '@radix-icons/vue'
+
+
+import { Button } from '@/components/ui/button'
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+
+import NewTransactionForm from '@/components/transactions/NewTransactionForm.vue'
+
+
 import { getFilteredTransactionsKey, transactionsKey } from '@/utils/db'
 import { inject, onMounted, ref, watch, type Ref } from 'vue'
 import type { Transaction } from '@/utils/indexedDB'
 import { mapTransactionsToBuckets, mapTransactionsToBucketsByCategories, type BucketedTransaction, type CategoriesBucketedTransaction } from '@/utils/chartHelpers'
 
 
-
-
 const today = new Date();
 const allTransactions = inject(transactionsKey) as Ref<Transaction[]>
+
 const currentSelectedDate = ref({
   start: `${today.getFullYear()}-${today.getMonth() + 1}-01`,
   end: `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate() < 10 ? `0${today.getDate()}` : today.getDate()}`,
@@ -49,47 +67,11 @@ const onDateChange = async ({ start, end }: { start: string; end: string }) => {
   categoriesTabData.value = mapTransactionsToBucketsByCategories(filteredTransactions.value)
 }
 
-// function mapTransactionsToBucketsByCategories(transactions: Transaction[]): CategoriesBucketedTransaction[] {
-//   const groupedBy: 'day' | 'month' = transactions.every(tx => tx.date.slice(0, 7) === transactions[0].date.slice(0, 7))
-//     ? 'day'
-//     : 'month';
+const newTransactionModalOpen = ref(false)
 
-//   const buckets: Record<string, { food: number; transportation: number; general: number; bills: number }> = {};
-
-//   transactions.forEach(transaction => {
-//     const amount = transaction.amount;
-//     const bucket = groupedBy === 'day' ? transaction.date : transaction.date.slice(0, 7);
-
-//     if (!buckets[bucket]) {
-//       buckets[bucket] = { food: 0, transportation: 0, general: 0, bills: 0 };
-//     }
-
-//     switch (transaction.category?.toLowerCase()) {
-//       case 'food':
-//         buckets[bucket].food += amount;
-//         break;
-//       case 'transportation':
-//         buckets[bucket].transportation += amount;
-//         break;
-//       case 'general':
-//         buckets[bucket].general += amount;
-//         break;
-//       case 'bills':
-//         buckets[bucket].bills += amount;
-//         break;
-//     }
-//   });
-
-//   return Object.entries(buckets)
-//     .map(([bucket, totals]) => ({
-//       bucket,
-//       food: parseFloat(totals.food.toFixed(2)),
-//       transportation: parseFloat(totals.transportation.toFixed(2)),
-//       general: parseFloat(totals.general.toFixed(2)),
-//       bills: parseFloat(totals.bills.toFixed(2)),
-//     }))
-//     .sort((a, b) => new Date(a.bucket).getTime() - new Date(b.bucket).getTime());
-// }
+const handleSubmitNewTransaction = () => {
+  newTransactionModalOpen.value = false
+}
 
 onMounted(async () => {
   const today = new Date();
@@ -108,7 +90,7 @@ watch(() => allTransactions.value, () => {
 </script>
 
 <template>
-  <Tabs default-value="transactions">
+  <Tabs v-if="allTransactions.length" default-value="transactions">
     <div class="flex flex-row justify-end mb-4 gap-2">
       <DateFilter @change="onDateChange" />
       <TabsList class="mb-3 h-auto -space-x-px bg-background p-0 rtl:space-x-reverse">
@@ -140,4 +122,28 @@ watch(() => allTransactions.value, () => {
         :custom-tooltip="ChartTooltip" />
     </TabsContent>
   </Tabs>
+  <div v-else class="flex flex-col items-center justify-center h-[400px] gap-3">
+    <HandCoins class="opacity-30 w-20 h-20" :size="32" :strokeWidth="2" aria-hidden="true" />
+    <p class="text-muted-foreground">No transactions to show! Please add some to show your dashboard</p>
+
+    <Dialog :open="newTransactionModalOpen" @update:open="newTransactionModalOpen = $event">
+      <DialogTrigger as-child>
+        <Button class="border-dashed" variant="outline" @click="newTransactionModalOpen = true">
+          <PlusCircledIcon class="mr-1 h-4 w-4" />
+          Add Transaction
+        </Button>
+      </DialogTrigger>
+      <DialogContent class="">
+        <DialogHeader>
+          <DialogTitle>Add Transaction</DialogTitle>
+          <DialogDescription>
+            Add new Transaction to your account
+          </DialogDescription>
+        </DialogHeader>
+        <div class="grid gap-4 py-4">
+          <NewTransactionForm @submitted="handleSubmitNewTransaction" />
+        </div>
+      </DialogContent>
+    </Dialog>
+  </div>
 </template>

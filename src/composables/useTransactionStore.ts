@@ -10,8 +10,13 @@ import {
   getTransactionById,
 } from '@/utils/indexedDB'
 import { sortTransactions } from '@/utils/helpers'
+import { getExchangeRates } from '@/services/exchangeRates.servieces'
 
-export const useIndexedDbStore = () => {
+export const useTransactionsDbStore = () => {
+  const currentCurrency = ref('')
+  const exchangeRate = ref<{ [key: string]: number }>()
+  const ratesLastUpdated = ref<string>()
+
   const transactions = ref<Transaction[]>([])
   const isLoading = ref(false)
   const error = ref<string | null>(null)
@@ -22,6 +27,17 @@ export const useIndexedDbStore = () => {
     try {
       db.value = await openDatabase('FinanceDB')
       await fetchTransactions()
+    } catch (err) {
+      error.value = (err as Error).message
+    }
+  }
+
+  const fetchExchangeRate = async (curr: string): Promise<void> => {
+    currentCurrency.value = curr
+    try {
+      const { rates, lastUpdated } = await getExchangeRates(curr)
+      exchangeRate.value = { ...rates }
+      ratesLastUpdated.value = lastUpdated
     } catch (err) {
       error.value = (err as Error).message
     }
@@ -117,6 +133,9 @@ export const useIndexedDbStore = () => {
   initializeDb()
 
   return {
+    currentCurrency,
+    exchangeRate,
+    ratesLastUpdated,
     transactions,
     isLoading,
     error,
@@ -125,6 +144,7 @@ export const useIndexedDbStore = () => {
     updateTrx,
     deleteTrx,
     fetchTransactions,
+    fetchExchangeRate,
     getTrxById,
   }
 }

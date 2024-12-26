@@ -47,9 +47,7 @@ import {
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -63,8 +61,9 @@ import {
   ChevronRight,
 } from 'lucide-vue-next'
 
-import type { Account } from '@/types/Account'
-import { computed, ref } from 'vue'
+import { computed, inject, ref, type Ref } from 'vue'
+import { accountsKey, currentAccountKey, exchangeRatesLastUpdatedKey, updateAccountCurrencyKey } from '@/utils/db'
+import type { Account } from '@/utils/indexedDB'
 
 const route = useRoute()
 const currentRoute = computed(() => route.path)
@@ -97,23 +96,10 @@ const navigationItems = [
   },
 ]
 
-const accounts: Account[] = [
-  {
-    id: 0,
-    name: 'Acme Inc',
-    type: 'locked',
-  },
-  {
-    id: 1,
-    name: 'Acme Corp.',
-    type: 'open',
-  },
-  {
-    id: 2,
-    name: 'Evil Corp.',
-    type: 'locked',
-  },
-]
+const allAccounts = inject(accountsKey) as Ref<Account[]>
+const currentAccount = inject(currentAccountKey)
+const updateCurrency = inject(updateAccountCurrencyKey)
+const currencyRateLastUpdated = inject(exchangeRatesLastUpdatedKey)
 
 const sidebarOpen = ref(true)
 const newTransactionModalOpen = ref(false)
@@ -128,7 +114,7 @@ const handleSubmitNewTransaction = () => {
   <SidebarProvider>
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <AccountSwitcher :accounts="accounts" />
+        <AccountSwitcher :accounts="allAccounts" />
       </SidebarHeader>
 
       <SidebarContent>
@@ -192,7 +178,8 @@ const handleSubmitNewTransaction = () => {
         </div>
 
         <div class="flex flex-row gap-2 items-center">
-          <Select>
+          <span class="text-xs text-muted-foreground">Last updated:&nbsp;{{ currencyRateLastUpdated }}</span>
+          <Select :default-value="currentAccount?.currency" @update:modelValue="updateCurrency">
             <SelectTrigger class="w-[250px]">
               <SelectValue placeholder="Select a currency" />
             </SelectTrigger>
