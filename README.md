@@ -27,11 +27,9 @@ We have exciting features planned for future updates:
 - **🔗 Link Transactions to Accounts:** Track transactions for each account.
 - **🏃📈 Google Sheets Integration:** Use Google Sheets as a backend to store and manage your data.
 
-Stay tuned for these updates! 🚀
-
 ## Included Goodies 🚀
 
-As a proof of concept, we’ve implemented automation tests for:
+As a proof of concept, I’ve implemented automation tests for:
 
 - **Account Creation** 🔍
 - **Transaction Addition** ➕
