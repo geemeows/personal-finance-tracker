@@ -36,9 +36,9 @@ import {
 import NewTransactionForm from '@/components/transactions/NewTransactionForm.vue'
 
 
-import { currentAccountKey, exchangeRatesKey, getFilteredTransactionsKey, transactionsKey } from '@/utils/db'
+import { currentAccountKey, exchangeRatesKey, getFilteredTransactionsKey, transactionsKey } from '@/utils/injectionKeys'
 import { inject, onMounted, ref, watch, type Ref } from 'vue'
-import type { Transaction } from '@/utils/indexedDB'
+import type { Transaction } from '@/utils/indexedDBQueries'
 import { mapTransactionsToBuckets, mapTransactionsToBucketsByCategories, type BucketedTransaction, type CategoriesBucketedTransaction } from '@/utils/chartHelpers'
 import { JSONToCSV } from '@/utils/helpers'
 
@@ -110,6 +110,12 @@ onMounted(async () => {
 watch(() => allTransactions.value, () => {
   onDateChange(currentSelectedDate.value)
 })
+
+watch(() => currentAccount?.value, (newCurrentAccount) => {
+  if (newCurrentAccount) {
+    onDateChange(currentSelectedDate.value)
+  }
+}, { deep: true })
 
 </script>
 

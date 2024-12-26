@@ -1,6 +1,6 @@
 import { h } from 'vue'
 import type { ColumnDef } from '@tanstack/vue-table'
-import type { Transaction } from '@/utils/indexedDB'
+import type { Transaction } from '@/utils/indexedDBQueries'
 
 import { Badge } from '@/components/ui/badge'
 import DataTableColumnHeader from '@/components/common/Table/DataTableColumnHeader.vue'

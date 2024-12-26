@@ -1,7 +1,7 @@
 import { h } from 'vue'
 
 import { Pizza, Bus, HandCoins, ReceiptText } from 'lucide-vue-next'
-import type { Transaction } from './indexedDB'
+import type { Transaction } from './indexedDBQueries'
 
 export const labels = [
   {

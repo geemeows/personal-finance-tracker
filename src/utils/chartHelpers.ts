@@ -1,4 +1,4 @@
-import type { Transaction } from './indexedDB'
+import type { Transaction } from './indexedDBQueries'
 
 export interface BucketedTransaction {
   bucket: string

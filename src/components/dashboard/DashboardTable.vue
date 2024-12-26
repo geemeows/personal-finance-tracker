@@ -4,8 +4,8 @@ import DataTable from '@/components/common/Table/DataTable.vue'
 import { useToast } from '@/components/ui/toast/use-toast'
 
 import { inject, onMounted, type Ref } from 'vue'
-import { getTransactionsKey, transactionsKey } from '@/utils/db'
-import type { Transaction } from '@/utils/indexedDB'
+import { getTransactionsKey, transactionsKey } from '@/utils/injectionKeys'
+import type { Transaction } from '@/utils/indexedDBQueries'
 
 const transactions = inject(transactionsKey) as Ref<Transaction[]>
 

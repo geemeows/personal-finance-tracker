@@ -8,7 +8,7 @@ import {
   getAllTransactions,
   type Filter,
   getTransactionById,
-} from '@/utils/indexedDB'
+} from '@/utils/indexedDBQueries'
 import { sortTransactions } from '@/utils/helpers'
 import { getExchangeRates } from '@/services/exchangeRates.servieces'
 

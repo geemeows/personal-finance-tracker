@@ -6,7 +6,7 @@ import type {
   VisibilityState,
 } from '@tanstack/vue-table'
 
-import type { Transaction } from '@/utils/indexedDB';
+import type { Transaction } from '@/utils/indexedDBQueries';
 
 
 import {

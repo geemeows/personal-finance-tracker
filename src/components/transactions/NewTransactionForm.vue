@@ -5,15 +5,19 @@ import { createTransactionSchema } from '@/types/schemas'
 import { DependencyType } from '@/components/ui/auto-form/interface'
 import { useToast } from '@/components/ui/toast/use-toast'
 
-import type { Transaction } from '@/utils/indexedDB'
-import { inject, ref, watch } from 'vue'
-import { AddTransactionKey, getTransactionByIdKey, updateTransactionKey } from '@/utils/db'
+import currencies from '@/utils/currencies.json'
+
+import type { Transaction } from '@/utils/indexedDBQueries'
+import { inject, ref, watch, h } from 'vue'
+import { AddTransactionKey, currentAccountKey, getTransactionByIdKey, updateTransactionKey } from '@/utils/injectionKeys'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 
 import {
   CalendarDate,
 } from '@internationalized/date'
+
+import DropdownWithSearch from '@/components/common/Forms/DropdownWithSearch.vue'
 
 const addTrx = inject(AddTransactionKey, async () => {
   throw new Error('addTrx function not provided')
@@ -97,9 +101,21 @@ const updateTransaction = async (values: Record<string, string | number | Date>)
   }
 }
 
+const currentAccount = inject(currentAccountKey)
+
 const form = useForm({
   validationSchema: toTypedSchema(createTransactionSchema),
+  initialValues: {
+    currency: currentAccount?.value?.currency || '',
+    category: 'General',
+  }
 })
+
+
+const currenciesList = currencies.map(({ code, currency }) => ({
+  label: `${code} (${currency})`,
+  value: code,
+}))
 
 watch(() => props.id, async (id) => {
   if (id) {
@@ -137,7 +153,20 @@ watch(() => props.id, async (id) => {
           targetField: 'category',
           when: type => type === 'Income',
         },
-      ]">
+      ]" :field-config="{
+        currency: {
+          component: () => h(DropdownWithSearch, {
+            fieldName: 'currency',
+            value: currentAccount?.currency || '',
+            list: currenciesList,
+            label: 'Transaction Currency',
+            required: true,
+            'onUpdate:value': (newValue: string) => {
+              form.setFieldValue('currency', newValue)
+            }
+          }),
+        }
+      }">
       <Button class="w-full" type="submit">
         {{ currentTrx ? 'Update' : 'Submit' }}
       </Button>

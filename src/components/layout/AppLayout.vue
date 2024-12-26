@@ -17,6 +17,8 @@ import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 
 import { PlusCircledIcon } from '@radix-icons/vue'
+import { cn } from '@/lib/utils'
+
 
 import {
   Sidebar,
@@ -45,12 +47,21 @@ import {
 } from '@/components/ui/dialog'
 
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command'
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+
+import { CaretSortIcon, CheckIcon } from '@radix-icons/vue'
 
 import NewTransactionForm from '../transactions/NewTransactionForm.vue'
 
@@ -62,8 +73,8 @@ import {
 } from 'lucide-vue-next'
 
 import { computed, inject, ref, type Ref } from 'vue'
-import { accountsKey, currentAccountKey, exchangeRatesLastUpdatedKey, updateAccountCurrencyKey } from '@/utils/db'
-import type { Account } from '@/utils/indexedDB'
+import { accountsKey, currentAccountKey, exchangeRatesLastUpdatedKey, updateAccountCurrencyKey } from '@/utils/injectionKeys'
+import type { Account } from '@/utils/indexedDBQueries'
 
 const route = useRoute()
 const currentRoute = computed(() => route.path)
@@ -103,6 +114,12 @@ const currencyRateLastUpdated = inject(exchangeRatesLastUpdatedKey)
 
 const sidebarOpen = ref(true)
 const newTransactionModalOpen = ref(false)
+
+const selectCurrencyOpen = ref(false)
+const currenciesList = currencies.map(({ code, currency }) => ({
+  label: `${code} (${currency})`,
+  value: code,
+}))
 
 const handleSubmitNewTransaction = () => {
   newTransactionModalOpen.value = false
@@ -179,16 +196,41 @@ const handleSubmitNewTransaction = () => {
 
         <div class="flex flex-row gap-2 items-center">
           <span class="text-xs text-muted-foreground">Last updated:&nbsp;{{ currencyRateLastUpdated }}</span>
-          <Select :default-value="currentAccount?.currency" @update:modelValue="updateCurrency">
-            <SelectTrigger class="w-[250px]">
-              <SelectValue placeholder="Select a currency" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem v-for="{ code, currency } in currencies" :key="code" :value="code">
-                {{ `${code} (${currency})` }}
-              </SelectItem>
-            </SelectContent>
-          </Select>
+
+          <Popover v-model:open="selectCurrencyOpen">
+            <PopoverTrigger as-child>
+              <Button variant="outline" role="combobox" :aria-expanded="selectCurrencyOpen"
+                class="w-[250px] justify-between">
+                {{ currentAccount?.currency
+                  ? currenciesList.find((currency) => currency.value === currentAccount?.currency)?.label
+                  : "Select currency..." }}
+                <CaretSortIcon class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent class="w-[250px] p-0">
+              <Command>
+                <CommandInput class="h-9" placeholder="Search currency..." />
+                <CommandEmpty>No currency found.</CommandEmpty>
+                <CommandList>
+                  <CommandGroup>
+                    <CommandItem v-for="currency in currenciesList" :key="currency.value" :value="currency.value"
+                      @select="(ev) => {
+                        if (typeof ev.detail.value === 'string') {
+                          updateCurrency?.(ev.detail.value)
+                        }
+                        selectCurrencyOpen = false
+                      }">
+                      {{ currency.label }}
+                      <CheckIcon :class="cn(
+                        'ml-auto h-4 w-4',
+                        currentAccount?.currency === currency.value ? 'opacity-100' : 'opacity-0',
+                      )" />
+                    </CommandItem>
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
 
           <Dialog :open="newTransactionModalOpen" @update:open="newTransactionModalOpen = $event">
             <DialogTrigger as-child>

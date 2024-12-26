@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, inject, ref, type Ref } from 'vue'
 import type { Table } from '@tanstack/vue-table'
-import type { Transaction } from '@/utils/indexedDB'
+import type { Transaction } from '@/utils/indexedDBQueries'
 import { Button } from '@/components/ui/button'
 import DateFilter from '@/components/dashboard/DateFilter.vue'
 import { CalendarIcon } from '@radix-icons/vue'
@@ -27,7 +27,7 @@ import { JSONToCSV, labels, type } from '@/utils/helpers'
 import DataTableFacetedFilter from './DataTableFacetedFilter.vue'
 import DataTableViewOptions from './DataTableViewOptions.vue'
 import type { DateRange } from 'radix-vue'
-import { transactionsKey } from '@/utils/db'
+import { transactionsKey } from '@/utils/injectionKeys'
 
 
 interface DataTableToolbarProps {

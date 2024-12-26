@@ -1,5 +1,5 @@
 import { ref, watch } from 'vue'
-import { type Account, openDatabase, addAccount, getAllAccounts } from '@/utils/indexedDB'
+import { type Account, openDatabase, addAccount, getAllAccounts } from '@/utils/indexedDBQueries'
 
 export const useAccountsDbStore = () => {
   const accounts = ref<Account[]>([])

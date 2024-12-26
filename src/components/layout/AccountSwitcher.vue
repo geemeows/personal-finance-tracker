@@ -23,7 +23,7 @@ import {
   ChevronsUpDown,
   Plus,
 } from 'lucide-vue-next'
-import type { Account } from '@/utils/indexedDB';
+import type { Account } from '@/utils/indexedDBQueries';
 
 const { accounts } = defineProps<{
   accounts: Account[]

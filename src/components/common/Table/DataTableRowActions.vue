@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Row } from '@tanstack/vue-table'
-import type { Transaction } from '@/utils/indexedDB'
+import type { Transaction } from '@/utils/indexedDBQueries'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -23,7 +23,7 @@ import NewTransactionForm from '@/components/transactions/NewTransactionForm.vue
 
 import { DotsHorizontalIcon } from '@radix-icons/vue'
 import { inject, ref } from 'vue'
-import { deleteTransactionKey } from '@/utils/db'
+import { deleteTransactionKey } from '@/utils/injectionKeys'
 
 interface DataTableRowActionsProps {
   row: Row<Transaction>

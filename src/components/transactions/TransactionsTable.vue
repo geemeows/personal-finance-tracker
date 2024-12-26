@@ -3,8 +3,8 @@ import { inject, onMounted, type InjectionKey, type Ref } from 'vue'
 import { columns } from '@/utils/dashboardColumns'
 import DataTable from '@/components/common/Table/DataTable.vue'
 import { useToast } from '@/components/ui/toast/use-toast'
-import { getTransactionsKey, transactionsKey } from '@/utils/db'
-import type { Transaction } from '@/utils/indexedDB'
+import { getTransactionsKey, transactionsKey } from '@/utils/injectionKeys'
+import type { Transaction } from '@/utils/indexedDBQueries'
 
 const transactions = inject(transactionsKey) as Ref<Transaction[]>
 const fetchTransactions = inject(getTransactionsKey, async () => {

@@ -2,8 +2,8 @@
 import DashboardCard from '@/components/dashboard/DashboardCard.vue'
 import DashboardCharts from '@/components/dashboard/DashboardCharts.vue'
 import DashboardTable from '@/components/dashboard/DashboardTable.vue'
-import { currentAccountKey, exchangeRatesKey, getFilteredTransactionsKey, transactionsKey } from '@/utils/db';
-import type { Transaction } from '@/utils/indexedDB';
+import { currentAccountKey, exchangeRatesKey, getFilteredTransactionsKey, transactionsKey } from '@/utils/injectionKeys';
+import type { Transaction } from '@/utils/indexedDBQueries';
 import type { NoSubstitutionTemplateLiteral } from 'typescript';
 import { computed, inject, onMounted, ref, watch, type Ref } from 'vue';
 

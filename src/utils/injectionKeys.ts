@@ -1,4 +1,4 @@
-import type { Account, Filter, Transaction } from './indexedDB'
+import type { Account, Filter, Transaction } from './indexedDBQueries'
 import { type InjectionKey, type Ref } from 'vue'
 
 type addTransactionFn = (transaction: Omit<Transaction, 'id'>) => Promise<void>

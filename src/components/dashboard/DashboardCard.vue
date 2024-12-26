@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { currentAccountKey } from '@/utils/db';
+import { currentAccountKey } from '@/utils/injectionKeys';
 import { computed, inject } from 'vue';
 
 const { title, description, value } = defineProps<{
