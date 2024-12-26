@@ -38,8 +38,8 @@ const isDateDisabled = (date: CalendarDate) => {
 
 const changeDate = (newDate: DateRange) => {
   emit('change', {
-    start: newDate.start ? `${newDate.start.year}-${newDate.start.month}-${newDate.start.day}` : null,
-    end: newDate.end ? `${newDate.end.year}-${newDate.end.month}-${newDate.end.day}` : null,
+    start: newDate.start ? `${newDate.start.year}-${newDate.start.month}-${newDate.start.day < 10 ? `0${newDate.start.day}` : newDate.start.day}` : null,
+    end: newDate.end ? `${newDate.end.year}-${newDate.end.month}-${newDate.end.day < 10 ? `0${newDate.end.day}` : newDate.end.day}` : null,
   })
 }
 

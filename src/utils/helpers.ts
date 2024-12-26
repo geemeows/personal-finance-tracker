@@ -53,3 +53,17 @@ export const sortTransactions = (transactions: Transaction[]): Transaction[] => 
     return dateComparison
   })
 }
+
+export const JSONToCSV = (JSONData: Transaction[]) => {
+  let csv = ''
+  // Get the headers
+  const headers = Object.keys(JSONData[0])
+
+  csv += headers.join(',') + '\n'
+  // Add the data
+  JSONData.forEach(function (row) {
+    const data = headers.map((header) => JSON.stringify(row[header as keyof Transaction])).join(',')
+    csv += data + '\n'
+  })
+  return csv
+}

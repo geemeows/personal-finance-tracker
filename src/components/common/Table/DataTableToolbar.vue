@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, type Ref } from 'vue'
+import { computed, inject, ref, type Ref } from 'vue'
 import type { Table } from '@tanstack/vue-table'
 import type { Transaction } from '@/utils/indexedDB'
 import { Button } from '@/components/ui/button'
@@ -13,15 +13,21 @@ import {
 } from '@internationalized/date'
 
 
+import {
+  Download
+} from 'lucide-vue-next'
+
+
 import { Input } from '@/components/ui/input'
 import {
   Cross2Icon
 } from '@radix-icons/vue'
 
-import { labels, type } from '@/utils/helpers'
+import { JSONToCSV, labels, type } from '@/utils/helpers'
 import DataTableFacetedFilter from './DataTableFacetedFilter.vue'
 import DataTableViewOptions from './DataTableViewOptions.vue'
 import type { DateRange } from 'radix-vue'
+import { transactionsKey } from '@/utils/db'
 
 
 interface DataTableToolbarProps {
@@ -36,6 +42,7 @@ const df = new DateFormatter('en-US', {
 const props = defineProps<DataTableToolbarProps>()
 
 const isFiltered = computed(() => props.table.getState().columnFilters.length > 0)
+const allTransactions = inject(transactionsKey) as Ref<Transaction[]>
 
 const today = new Date();
 
@@ -52,6 +59,17 @@ const onDateChange = (date: DateRange) => {
   )
 }
 
+const onDownloadData = () => {
+  const CSVData = JSONToCSV(allTransactions.value);
+  // Create a CSV file and allow the user to download it
+  const blob = new Blob([CSVData], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'expensify_transactions.csv';
+  document.body.appendChild(a);
+  a.click();
+}
 
 const resetFilters = () => {
   props?.table.resetColumnFilters()
@@ -101,6 +119,12 @@ const resetFilters = () => {
         <Cross2Icon class="ml-2 h-4 w-4" />
       </Button>
     </div>
+    <Button
+      class="mr-1 rounded-full border border-dashed border-green-500 text-green-600 hover:text-green-600 flex flex-row items-center"
+      variant="outline" @click="onDownloadData">
+      <Download class="w-4 h-4" />
+      <span>Download CSV</span>
+    </Button>
     <DataTableViewOptions :table="table" />
   </div>
 </template>

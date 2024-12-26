@@ -16,6 +16,7 @@ import {
   CircleDollarSign,
   PanelsTopLeft,
   HandCoins,
+  Download
 } from 'lucide-vue-next'
 
 import { PlusCircledIcon } from '@radix-icons/vue'
@@ -39,6 +40,7 @@ import { currentAccountKey, exchangeRatesKey, getFilteredTransactionsKey, transa
 import { inject, onMounted, ref, watch, type Ref } from 'vue'
 import type { Transaction } from '@/utils/indexedDB'
 import { mapTransactionsToBuckets, mapTransactionsToBucketsByCategories, type BucketedTransaction, type CategoriesBucketedTransaction } from '@/utils/chartHelpers'
+import { JSONToCSV } from '@/utils/helpers'
 
 
 const today = new Date();
@@ -82,6 +84,19 @@ const handleSubmitNewTransaction = () => {
   newTransactionModalOpen.value = false
 }
 
+const onDownloadData = () => {
+  const CSVData = JSONToCSV(filteredTransactions.value);
+  // Create a CSV file and allow the user to download it
+  const blob = new Blob([CSVData], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'expensify_transactions.csv';
+  document.body.appendChild(a);
+  a.click();
+}
+
+
 onMounted(async () => {
   const today = new Date();
   const startDate = `${today.getFullYear()}-${today.getMonth() + 1}-01`;
@@ -118,6 +133,12 @@ watch(() => allTransactions.value, () => {
           </div>
         </TabsTrigger>
       </TabsList>
+      <Button
+        class="rounded-full border border-dashed border-green-500 text-green-600 hover:text-green-600 flex flex-row items-center"
+        variant="outline" @click="onDownloadData">
+        <Download class="w-4 h-4" />
+        <span>Download CSV</span>
+      </Button>
     </div>
 
     <TabsContent value="transactions">
