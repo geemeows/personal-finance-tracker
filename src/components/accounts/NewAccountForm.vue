@@ -4,8 +4,12 @@ import { Button } from '@/components/ui/button'
 import { createAccountSchema } from '@/types/schemas'
 import { useToast } from '@/components/ui/toast/use-toast'
 
+import currencies from '@/utils/currencies.json'
+import DropdownWithSearch from '@/components/common/Forms/DropdownWithSearch.vue'
+
+
 import type { Account } from '@/utils/indexedDBQueries'
-import { inject, watch } from 'vue'
+import { inject, h } from 'vue'
 import { addAccountKey } from '@/utils/injectionKeys'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
@@ -18,8 +22,12 @@ const addAccount = inject(addAccountKey, async () => {
 })
 
 const emit = defineEmits(['submitted'])
-const { id } = defineProps<{ id?: number }>()
 const { toast } = useToast()
+
+const currenciesList = currencies.map(({ code, currency }) => ({
+  label: `${code} (${currency})`,
+  value: code,
+}))
 
 const addNewAccount = async (values: Omit<Account, 'id'>) => {
   try {
@@ -41,10 +49,10 @@ const addNewAccount = async (values: Omit<Account, 'id'>) => {
 
 const form = useForm({
   validationSchema: toTypedSchema(createAccountSchema),
+  initialValues: {
+    currency: 'EGP',
+  }
 })
-
-watch(() => id, async (newId) => {
-}, { immediate: true })
 </script>
 
 <template>
@@ -55,6 +63,18 @@ watch(() => id, async (newId) => {
           type: 'password',
         },
       },
+      currency: {
+        component: () => h(DropdownWithSearch, {
+          fieldName: 'currency',
+          value: 'EGP',
+          list: currenciesList,
+          label: 'Account Currency',
+          required: true,
+          'onUpdate:value': (newValue: string) => {
+            form.setFieldValue('currency', newValue)
+          }
+        }),
+      }
     }" @submit="addNewAccount">
       <Button class="w-full" type="submit">
         Create Account

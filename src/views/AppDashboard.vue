@@ -47,7 +47,7 @@ watch(() => allTransactions.value, async () => {
 
 <template>
   <div class="flex items-center justify-between space-y-2">
-    <div>
+    <div class="mb-4">
       <h2 class="text-2xl font-bold tracking-tight">
         Welcome back!
       </h2>
