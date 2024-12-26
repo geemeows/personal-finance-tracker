@@ -53,7 +53,7 @@ watch(() => accounts.value, (newAccounts) => {
   }
 })
 
-watch(() => currentAccount.value, async (newAccount, oldAccount) => {
+watch(() => currentAccount.value, async (newAccount) => {
   if (newAccount && newAccount.currency !== currentCurrency.value) {
     await fetchExchangeRate(newAccount.currency)
   }
